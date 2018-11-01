@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Liga Desportiva UFSCar-Sorocaba</string>
+    <string name="title_activity_jogo">Jogo</string>
+    <string name="title_activity_tela_jogo">TelaJogo</string>
+    <string name="msg_tela_jogo">Aqui é onde ficarão as informações sobre o jogo selecionado!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="nao_disponivel">Informações não disponíveis</string>
+
+    <string name="curso_adm">Administração</string>
+    <string name="curso_bio">Ciências Biológicas</string>
+    <string name="curso_bcc">Ciência da Computação</string>
+    <string name="curso_eco">Ciências Econômicas</string>
+    <string name="curso_prod">Engenharia de Produção</string>
+    <string name="curso_flo">Engenharia Florestal</string>
+    <string name="curso_fis">Física</string>
+    <string name="curso_geo">Geografia</string>
+    <string name="curso_mat">Matemática</string>
+    <string name="curso_pedago">Pedagogia</string>
+    <string name="curso_qui">Química</string>
+    <string name="curso_tur">Turismo</string>
+</resources>
