@@ -35,6 +35,7 @@
                 android:textSize="20sp"
                 android:textColor="#77000000"
                 android:text="Curso"
+                android:visibility="gone"
                 android:gravity="center"/>
         </LinearLayout>
 

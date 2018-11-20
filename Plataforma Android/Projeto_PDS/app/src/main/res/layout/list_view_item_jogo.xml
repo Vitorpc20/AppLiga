@@ -26,7 +26,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:textColor="#aa000000"
-                android:gravity="center"
                 android:text="Time 1 vs Time 2"/>
 
             <LinearLayout
