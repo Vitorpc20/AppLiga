@@ -32,5 +32,11 @@ class Partida_model extends CI_Model {
 		$this->db->where('cod_jogo', $data);
 		$this->db->delete('jogo');
 	}
+
+	public function atualizaPartida($array, $id)
+	{
+		$this->db->where('cod_jogo', $id);
+		$this->db->update('jogo', $array);
+	}
 }
 ?>

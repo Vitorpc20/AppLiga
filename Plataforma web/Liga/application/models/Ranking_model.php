@@ -9,13 +9,12 @@ class Ranking_model extends CI_Model {
 	}
 	public function alterarRanking($data)
 	{
-		#$this->db->update('mytable', $data, array('id' => $id));
-		$this->db->where("curso",$data['curso']);
-		$this->db->update("campeonato_curso",$data);
+		$this->db->where("curso", $data['curso']);
+		$this->db->update("campeonato_curso", $data);
 	}
 	public function inserirRanking($data)
 	{
-		$this->db->insert('ranking', $data);
+		$this->db->insert('campeonato_curso', $data);
 	}
 
 	public function listarRanking()

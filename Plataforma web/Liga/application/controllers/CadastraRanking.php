@@ -15,6 +15,10 @@ class CadastraRanking extends CI_Controller {
 		$ranking = $this->Ranking_model->listarRanking();
 		$this->session->set_flashdata('ranking', $ranking);
 		$this->load->view('ranking');
+
+		$this->load->model('Curso_model');
+		$cursos = $this->Curso_model->listarCursos();
+		$this->session->set_flashdata('cursos', $cursos);
 		
 	}
 	public function atualiza()
@@ -31,8 +35,8 @@ class CadastraRanking extends CI_Controller {
 			$this->load->view('ranking', $mensagem);
 		} else {
 			$data = array(
-				'curso' => $this->input->post('curso'),
-				'pontuacao' => $this->input->post('pontuacao'));
+			'curso' => $this->input->post('curso'),
+			'pontuacao' => $this->input->post('pontuacao'));
 			//Transfering data to Model
 
 			$this->load->model("Ranking_model");
@@ -44,6 +48,10 @@ class CadastraRanking extends CI_Controller {
 			$ranking = $this->Ranking_model->listarRanking();
 			$this->session->set_flashdata('ranking', $ranking);
 			$this->load->view('ranking');
+
+			$this->load->model('Curso_model');
+			$cursos = $this->Curso_model->listarCursos();
+			$this->session->set_flashdata('cursos', $cursos);
 		}
 	}
 

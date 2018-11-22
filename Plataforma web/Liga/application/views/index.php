@@ -53,13 +53,13 @@
                                 <a href="<?php echo site_url ('CadastraCampeonato/')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cadastro campeonato </span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCurso/')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cadastro de cursos</span></a>
+                                <a href="<?php echo site_url ('CadastraCurso/')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraJogador/')?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro jogadores</span></a>
+                                <a href="<?php echo site_url ('CadastraJogador/')?>" aria-expanded="true"><i class="ti-slice"></i><span>Jogadores</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraPartida/')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro partida</span></a>
+                                <a href="<?php echo site_url ('CadastraPartida/')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a>
                             </li>
                             <li>
                                 <a href="<?php echo site_url ('CadastraRanking/')?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/avatar.png')?>" alt="avatar">
+                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador<i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Settings</a>

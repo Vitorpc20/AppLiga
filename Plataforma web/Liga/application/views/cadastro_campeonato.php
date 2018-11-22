@@ -56,16 +56,16 @@ $campeonatos = $this->session->flashdata('campeonatos');
                                 <a href="<?php echo site_url('Index');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCampeonato')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cadastro campeonato </span></a>
+                                <a href="<?php echo site_url ('CadastraCampeonato')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Campeonatos</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cadastro de cursos</span></a>
+                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro jogadores</span></a>
+                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Jogadores</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro partida</span></a>
+                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a>
                             </li>
                             <li>
                                 <a href="<?php echo site_url ('CadastraRanking')?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
@@ -108,7 +108,7 @@ $campeonatos = $this->session->flashdata('campeonatos');
                 <div class="row align-items-center">
                     <div class="col-sm-6">
                         <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">Cadastro campeonato</h4>
+                            <h4 class="page-title pull-left">Campeonatos</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="<?php echo site_url('Index');?>">Home</a></li>
                                 <li><span>Formulário de cadastro</span></li>
@@ -117,7 +117,7 @@ $campeonatos = $this->session->flashdata('campeonatos');
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                            <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/avatar.png')?>" alt="avatar">
+                            <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Settings</a>
@@ -136,7 +136,7 @@ $campeonatos = $this->session->flashdata('campeonatos');
                             <div class="col-12 mt-5">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">cadastrar campeonato</h4>
+                                        <h4 class="header-title">Cadastrar campeonato</h4>
                                         <form class="form-group" method="POST" action="<?php echo site_url('CadastraCampeonato/cadastra');?>">
                                             <label for="example-text-input" class="col-form-label">Nome</label>
                                             <input class="form-control" type="text" name="nome_campeonato" id="nome_campeonato">

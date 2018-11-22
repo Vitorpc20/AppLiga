@@ -1,6 +1,10 @@
 <?php 
 $ranking = $this->session->flashdata('ranking');
- ?>
+?>
+
+<?php 
+$cursos = $this->session->flashdata('cursos');
+?>
 
 <!doctype html>
 <html class="no-js" lang="en">
@@ -62,13 +66,13 @@ $ranking = $this->session->flashdata('ranking');
                                 <a href="<?php echo site_url ('CadastraCampeonato')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cadastro campeonato </span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cadastro de cursos</span></a>
+                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro jogadores</span></a>
+                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Jogadores</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro partida</span></a>
+                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a>
                             </li>
                             <li>
                                 <a href="<?php echo site_url ('CadastraRanking')?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
@@ -119,7 +123,7 @@ $ranking = $this->session->flashdata('ranking');
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/avatar.png')?>" alt="avatar">
+                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Settings</a>
@@ -144,16 +148,13 @@ $ranking = $this->session->flashdata('ranking');
                                             <div class="col-sm-3 my-1">
                                                 <label class="col-form-label" >Curso</label>
                                                 <select class="form-control" name="curso">
-                                                    <option></option>
-                                                    <option id="bcc">Ciência da computação</option>
-                                                    <option id="producao">Engenharia de Produção</option>
-                                                    <option id="adm">Administração</option>
-                                                    <option id="eco">Economia</option>
-                                                    <option id="flor">Engenharia Florestal</option>
-                                                    <option id="geo">Geografia</option>
-                                                    <option id="tur">Turismo</option>
-                                                    <option id="dfqm">DFQM</option>
-                                                    <option id="pedagogia">Pedagogia</option>
+                                                     <option></option>
+                                                    <?php 
+                                                        foreach($cursos AS $value):
+                                                    ?>
+                                                    <option><?php echo $value['nome'] ?></option>
+
+                                                    <?php endforeach; ?>
                                                 </select>
 
                                                 <label for="example-text-input" class="col-form-label">Pontuação</label>
@@ -184,11 +185,13 @@ $ranking = $this->session->flashdata('ranking');
                                                     </thead>
                                                     <tbody>
                                                         <?php 
+                                                            $i = 0;
                                                             foreach($ranking AS $value):
+                                                            $i++;
                                                          ?>
 
-                                                         <tr>
-                                                            <th></td>
+                                                        <tr>
+                                                            <td><?php echo $i ?></td>
                                                             <td><?php echo $value['curso'] ?></td>
                                                             <td><?php echo $value['pontuacao'] ?></td>
                                                         </tr>

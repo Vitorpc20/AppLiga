@@ -32,5 +32,17 @@ class Jogador_model extends CI_Model {
 		$this->db->where('nome', $data);
 		$this->db->delete('jogador');
 	}
+
+	public function atualiza($nome, $curso, $id_jogador)
+	{
+
+		$array = array(
+        'nome' => $nome,
+        'curso' => $curso,
+		);
+
+		$this->db->where('cod_jogador', $id_jogador);
+		$this->db->update('jogador', $array);
+	}
 }
 ?>

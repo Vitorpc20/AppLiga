@@ -11,11 +11,12 @@ class Curso_model extends CI_Model {
 	{
 		return $this->db->insert('curso', $data);
 	}
-	public function selecionaCurso()
+	public function selecionaCurso($data)
 	{
-		#tem que terminar isso daqui talquei
-		#$query=$this->db->get('Pessoa');
-        #return $query->result();	
+		$this->db->select('nome');
+		$this->db->from('curso');
+		$this->db->where('nome', $name);
+		return $query = $this->db->get();
 	}
 
 	public function listarCursos(){
@@ -31,6 +32,13 @@ class Curso_model extends CI_Model {
 	{
 		$this->db->where('nome', $data);
 		$this->db->delete('curso');
+	}
+
+	public function atualiza($novo, $antigo)
+	{
+		$this->db->set('nome', $novo);
+		$this->db->where('nome', $antigo);
+		$this->db->update('curso');
 	}
 }
 ?>

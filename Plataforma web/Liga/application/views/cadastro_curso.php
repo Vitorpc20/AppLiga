@@ -1,5 +1,9 @@
 <?php 
 $cursos = $this->session->flashdata('cursos');
+?>
+
+<?php 
+$curso = $this->session->flashdata('curso');
  ?>
 
 <!doctype html>
@@ -59,13 +63,13 @@ $cursos = $this->session->flashdata('cursos');
                                 <a href="<?php echo site_url ('CadastraCampeonato')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cadastro campeonato </span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cadastro de cursos</span></a>
+                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro jogadores</span></a>
+                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Jogadores</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro partida</span></a>
+                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a>
                             </li>
                             <li>
                                 <a href="<?php echo site_url ('CadastraRanking')?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
@@ -107,7 +111,7 @@ $cursos = $this->session->flashdata('cursos');
                 <div class="row align-items-center">
                     <div class="col-sm-6">
                         <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">Cadastro de cursos</h4>
+                            <h4 class="page-title pull-left">Cursos</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="<?php echo site_url('Index');?>">Home</a></li>
                                 <li><span>Formulário de cadastro</span></li>
@@ -116,7 +120,7 @@ $cursos = $this->session->flashdata('cursos');
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/avatar.png')?>" alt="avatar">
+                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
                             <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador <i class="fa fa-angle-down"></i></h4>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Settings</a>
@@ -135,7 +139,7 @@ $cursos = $this->session->flashdata('cursos');
                             <div class="col-12 mt-5">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">Inserir curso</h4>
+                                        <h4 class="header-title">Cadastrar curso</h4>
                                         <form class="form-group" method="POST" action="<?php echo site_url('CadastraCurso/cadastra');?>">
                                             <label for="example-text-input" class="col-form-label">Nome</label>
                                             <input class="form-control" type="text" name="nome_curso" id="nome_curso">
@@ -162,20 +166,43 @@ $cursos = $this->session->flashdata('cursos');
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php 
-                                                            foreach($cursos AS $value):
-                                                        ?>
-
+                                                    <?php 
+                                                        $i = 0;
+                                                        foreach($cursos AS $value):
+                                                        $i++;
+                                                    ?>
                                                         <tr>
                                                             <th><?php echo $value['nome'] ?></th>
                                                             <td>
                                                             <ul class="d-flex justify-content-center">
-                                                                <li class="mr-3"><a href="#" class="text-secondary"><i class="fa fa-edit"></i></a></li>
+                                                                <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $i ?>" class="text-secondary"><i class="fa fa-edit"></i></a></li>
                                                                 <li><a href="<?php echo site_url() . '/cadastraCurso/remove/' . $value['nome']; ?>" class="text-danger"><i class="ti-trash"></i></a></li>
                                                             </ul>
                                                             </td>
                                                         </tr>
-                                                        <?php endforeach; ?> 
+                                                        <!-- modal -->
+                                                        <div class="modal fade" id="<?php echo $i ?>">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Atualizar curso</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form class="form-group" method="POST" action="<?php echo site_url() . '/cadastraCurso/atualizar/' . $value['nome']; ?>">
+                                                                            <label for="example-text-input" class="col-form-label">Nome</label>
+                                                                            <input class="form-control" type="text"name="nome_curso" id="nome_curso" value="<?php echo $value['nome'] ?>">
+
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?> 
                                                     </tbody>
                                                 </table>
                                             </div>
