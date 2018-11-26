@@ -53,6 +53,9 @@ class CadastraPartida extends CI_Controller {
 			'curso2' => $this->input->post('curso2'),
 			'resultado1' => $this->input->post('resultado1'),
 			'resultado2' => $this->input->post('resultado2'));
+
+			//echo $data['data'];
+
 			//Transfering data to Model
 
 			$this->load->model("Partida_model");

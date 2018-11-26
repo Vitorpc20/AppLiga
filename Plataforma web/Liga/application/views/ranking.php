@@ -148,7 +148,7 @@ $cursos = $this->session->flashdata('cursos');
                                             <div class="col-sm-3 my-1">
                                                 <label class="col-form-label" >Curso</label>
                                                 <select class="form-control" name="curso">
-                                                     <option></option>
+                                                    <option selected="true" disabled="disabled">Selecionar curso</option>
                                                     <?php 
                                                         foreach($cursos AS $value):
                                                     ?>
@@ -159,8 +159,9 @@ $cursos = $this->session->flashdata('cursos');
 
                                                 <label for="example-text-input" class="col-form-label">Pontuação</label>
                                                 <input class="form-control" type="text" name="pontuacao" id="pontuacao">
+                                                
+                                                <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4" id="botao_cadastrar_campeonato">Atualizar</button> 
                                             </div>
-                                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4" id="botao_cadastrar_campeonato">Atualizar</button> 
                                         </form>
                                         <?php 
                                             if(isset($mensagem_cadastro)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_cadastro."</div></html>"; 

@@ -145,7 +145,7 @@ $cursos = $this->session->flashdata('cursos');
                                         <form class="form-group" method="POST" action="<?php echo site_url('CadastraPartida/cadastra');?>">
                                             <label class="col-form-label" >Modalidade</label>
                                             <select class="form-control" name="modalidade">
-                                                <option></option>
+                                                <option selected="true" disabled="disabled" >Selecionar modalidade</option>
                                                 <option id="feminino_futsal">Feminino Futsal</option>
                                                 <option id="feminino_basquete">Feminino Basquete</option>
                                                 <option id="feminino_handebol">Feminino Handebol</option>
@@ -165,7 +165,7 @@ $cursos = $this->session->flashdata('cursos');
                                                 <div class="col-sm-6 my-1">
                                                     <label class="col-form-label">Curso 1</label>
                                                     <select class="form-control" name="curso1">
-                                                       <option></option>
+                                                       <option selected="true" disabled="disabled">Selecionar curso</option>
                                                         <?php 
                                                             foreach($cursos AS $value):
                                                         ?>
@@ -177,7 +177,7 @@ $cursos = $this->session->flashdata('cursos');
                                                 <div class="col-sm-6 my-1">
                                                     <label class="col-form-label">Curso 2</label>
                                                     <select class="form-control" name="curso2">
-                                                        <option></option>
+                                                        <option selected="true" disabled="disabled">Selecionar curso</option>
                                                         <?php 
                                                             foreach($cursos AS $value):
                                                         ?>
@@ -190,7 +190,7 @@ $cursos = $this->session->flashdata('cursos');
                                             <div class="form-row align-items-center">
                                                 <div class="col-sm-6 my-1">
                                                     <label for="example-text-input" class="col-form-label">Resultado Curso 1</label>
-                                                    <input class="form-control" type="text" name="resultado1" id="resultado1">
+                                                    <input class="form-control" type="text" name="resultado1"id="resultado1">
                                                 </div>
                                                     <div class="col-sm-6 my-1">
                                                     <label for="example-text-input" class="col-form-label">Resultado Curso 2</label>
@@ -228,11 +228,11 @@ $cursos = $this->session->flashdata('cursos');
                                                     <tr>
                                                         <th><?php echo $value['curso1'] ?> <?php echo $value['resultado1'] ?> X <?php echo $value['resultado2']?> <?php echo $value['curso2']?></th>
                                                         <th><?php echo $value['modalidade'] ?></th>
-                                                        <th><?php echo $value['horario'] ?>/<?php echo $value['data'] ?></th>
+                                                        <th><?php echo $value['horario'] ?>/<?php echo date('d-m-Y', strtotime($value['data'])) ?></th>
                                                         <td>
                                                             <ul class="d-flex justify-content-center">
-                                                                <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $value['cod_jogo'] ?>" class="text-secondary"><i class="fa fa-edit"></i></a></li>
-                                                                <li><a href="<?php echo site_url() . '/CadastraPartida/remove/' . rawurlencode($value['cod_jogo']); ?>" class="text-danger"><i class="ti-trash"></i></a></li>
+                                                                <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $value['cod_jogo'] ?>" class="text-secondary"><i style="cursor:pointer" class="fa fa-edit"></i></a></li>
+                                                                <li><a href="<?php echo site_url() . '/CadastraPartida/remove/' . rawurlencode($value['cod_jogo']); ?>" class="text-danger"><i style="cursor:pointer" class="ti-trash"></i></a></li>
                                                             </ul>
                                                         </td>
                                                     </tr>
@@ -304,6 +304,10 @@ $cursos = $this->session->flashdata('cursos');
                                                                                     <button type="submit" class="btn btn-primary">Salvar</button>
                                                                                 </div>
                                                                         </form>
+                                                                         <?php 
+                                                                            if(isset($mensagem_cadastro)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_cadastro."</div></html>"; 
+                                                                            if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
+                                                                        ?> 
                                                                     </div>
                                                                 </div>
                                                             </div>

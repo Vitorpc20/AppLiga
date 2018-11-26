@@ -146,7 +146,7 @@ $cursos = $this->session->flashdata('cursos');
         
                                             <label class="col-form-label">Curso</label>
                                                 <select class="form-control" name="curso_jogador">
-                                                    <option></option>
+                                                    <option selected="true" disabled="disabled">Selecionar curso</option>
                                                     <?php 
                                                         foreach($cursos AS $value):
                                                     ?>
@@ -187,8 +187,8 @@ $cursos = $this->session->flashdata('cursos');
                                                             <td><?php echo $value['curso'] ?></td>
                                                             <td>
                                                             <ul class="d-flex justify-content-center">
-                                                                <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $value['cod_jogador'] ?>" class="text-secondary"><i class="fa fa-edit"></i></a></li>
-                                                                <li><a href="<?php echo site_url() . '/CadastraJogador/remove/' . rawurlencode($value['nome']); ?>" class="text-danger"><i class="ti-trash"></i></a></li>
+                                                                <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $value['cod_jogador'] ?>" class="text-secondary"><i style="cursor:pointer" class="fa fa-edit"></i></a></li>
+                                                                <li><a href="<?php echo site_url() . '/CadastraJogador/remove/' . rawurlencode($value['nome']); ?>" class="text-danger"><i style="cursor:pointer" class="ti-trash"></i></a></li>
                                                             </ul>
                                                             </td>
                                                         </tr>

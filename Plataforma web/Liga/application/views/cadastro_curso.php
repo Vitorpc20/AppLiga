@@ -175,8 +175,8 @@ $curso = $this->session->flashdata('curso');
                                                             <th><?php echo $value['nome'] ?></th>
                                                             <td>
                                                             <ul class="d-flex justify-content-center">
-                                                                <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $i ?>" class="text-secondary"><i class="fa fa-edit"></i></a></li>
-                                                                <li><a href="<?php echo site_url() . '/cadastraCurso/remove/' . $value['nome']; ?>" class="text-danger"><i class="ti-trash"></i></a></li>
+                                                                <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $i ?>" class="text-secondary"><i style="cursor:pointer" class="fa fa-edit"></i></a></li>
+                                                                <li><a href="<?php echo site_url() . '/cadastraCurso/remove/' . $value['nome']; ?>" class="text-danger"><i style="cursor:pointer" class="ti-trash"></i></a></li>
                                                             </ul>
                                                             </td>
                                                         </tr>
