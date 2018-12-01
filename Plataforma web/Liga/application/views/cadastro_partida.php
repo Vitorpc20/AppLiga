@@ -219,6 +219,7 @@ $cursos = $this->session->flashdata('cursos');
                                                         <th scope="col">Modalidade</th>
                                                         <th scope="col">Hora/Data</th>
                                                         <th scope="col">Editar/Excluir</th>
+                                                        <th scope="col">Visualizar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -235,6 +236,8 @@ $cursos = $this->session->flashdata('cursos');
                                                                 <li><a href="<?php echo site_url() . '/CadastraPartida/remove/' . rawurlencode($value['cod_jogo']); ?>" class="text-danger"><i style="cursor:pointer" class="ti-trash"></i></a></li>
                                                             </ul>
                                                         </td>
+                                                        <th><a href="<?php echo site_url() . '/CadastraPartida/Visualizar/' . rawurlencode($value['cod_jogo']); ?>" ><i style="cursor:pointer" class="fa fa-list-alt"></i></a>
+                                                        </th>
                                                     </tr>
                                                     <div class="modal fade" id="<?php echo $value['cod_jogo'] ?>">
                                                             <div class="modal-dialog modal-dialog-centered" role="document">

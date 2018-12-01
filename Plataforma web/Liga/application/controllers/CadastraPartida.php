@@ -54,8 +54,6 @@ class CadastraPartida extends CI_Controller {
 			'resultado1' => $this->input->post('resultado1'),
 			'resultado2' => $this->input->post('resultado2'));
 
-			//echo $data['data'];
-
 			//Transfering data to Model
 
 			$this->load->model("Partida_model");
@@ -155,6 +153,35 @@ class CadastraPartida extends CI_Controller {
 			$cursos = $this->Curso_model->listarCursos();
 			$this->session->set_flashdata('cursos', $cursos);
 		}
+    }
+
+    public function Visualizar()
+    {
+    	$data = $this->uri->segment(3);
+		$data = rawurldecode($data);
+
+		$this->load->model('Partida_model');
+		$partida = $this->Partida_model->selecionaPartida($data);
+		$this->session->set_flashdata('partida', $partida);
+		$this->load->view('partida_jogador');
+    }
+
+    public function pesquisa()
+    {
+    	 if (isset($_GET['term'])) {
+    	 	$this->load->model('Partida_model');
+            $result = $this->Partida_model->jogador_partida($_GET['term']);
+            if (count($result) > 0) {
+	            foreach ($result as $row)
+	            $arr_result[] = $row->nome;
+	            echo json_encode($arr_result);
+            }
+        }
+    }
+
+    public function Jogadores()
+    {
+    	
     }
 }
 ?>
