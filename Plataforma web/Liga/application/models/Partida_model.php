@@ -17,10 +17,12 @@ class Partida_model extends CI_Model {
 		return ($query->num_rows() > 0) ? $query->result_array() : array();
 
 	}
-	public function listarPartidas(){
+	public function listarPartidas($data){
 
 		$this->db->from('jogo')
-		->select('*');
+		->select('*')
+		->where('cod_campeonato',$data)
+		->order_by("data desc,horario asc");
 
 		$busca = $this->db->get();
 
@@ -38,12 +40,6 @@ class Partida_model extends CI_Model {
 		$this->db->where('cod_jogo', $id);
 		$this->db->update('jogo', $array);
 	}
-
-	public function jogador_partida($data)
-	{
-		$this->db->like('nome', $data, 'after');
-        $this->db->order_by('nome', 'ASC');
-        return $this->db->get('jogador')->result();
-	}
+	
 }
 ?>

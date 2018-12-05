@@ -1,5 +1,9 @@
 <?php 
 $partida = $this->session->flashdata('partida');
+$jogador_partida1 = $this->session->flashdata('jogador_partida1');
+$jogador_partida2 = $this->session->flashdata('jogador_partida2');
+
+$campeonato = $this->session->userdata('campeonato');
 
 ?>
 
@@ -59,23 +63,22 @@ $partida = $this->session->flashdata('partida');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
+                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="ti-dashboard"></i><span><< Mais Campeonatos</span></a>
                             </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraCampeonato')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Cadastro campeonato</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Jogadores</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraRanking')?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
-                            </li>
+                            <?php foreach ($campeonato as $value): ?>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos Participantes</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro de Jogadores</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro e gerência de Partidas</span></a> 
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
+                                </li>
+                            <?php endforeach ?>
                         </ul>
                     </nav>
                 </div>
@@ -116,8 +119,11 @@ $partida = $this->session->flashdata('partida');
                             <h4 class="page-title pull-left">Partidas</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="<?php echo site_url('Index');?>">Home</a></li>
-                                <li><a href="<?php echo site_url ('CadastraPartida')?>">Formulário de partida</a></li>
-                                <li><span>Detalhes partida</span></li>
+                                <li><a href="<?php echo site_url('Index/campeonatos');?>">Campeonatos</a></li>
+                                <li><a href="<?php echo site_url('CadastraPartida/Index');?>">Cadastro e Gerência de Partidas</a></li>
+                                <li><span><?php foreach ($campeonato as $value): ?>
+                                    <?php echo $value['nome'] ?> <?php echo $value['ano'] ?>
+                                <?php endforeach ?> - Jogadores da Partida</span></li>
                             </ul>
                         </div>
                     </div>
@@ -137,109 +143,159 @@ $partida = $this->session->flashdata('partida');
             <div class="main-content-inner">
                 <div class="row">
                             <!-- Textual inputs start -->
-                            <div class="col-lg-12 mt-5">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="header-title">Partida</h4>
-                                        <p class="text-muted font-14 mb-4"></p>
+                    <div class="col-lg-12 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Partida</h4>
+                                <p class="text-muted font-14 mb-4"></p>
 
-                                        <form class="form-group" method="POST" action="<?php echo site_url('CadastraPartida/Jogadores');?>">
-                                        <?php 
-                                            foreach($partida AS $value):
-                                        ?>
-                                            <div class="form-row align-items-center">
-                                                <div class="col-sm-auto my-1">
-                                                    <label class="col-form-label" style="text-align: center;"><h1><?php echo $value['curso1'] ?></h1></label> 
-                                                </div>
-                                                <div class="col-sm-auto my-1">
-                                                    <input class="form-control" style="text-align: center;" type="text" id="resultado1" value="<?php echo $value['resultado1'] ?>">
-                                                </div>
-                                                <div class="col-sm-auto">
-                                                    <h1>X</h1>
-                                                </div>
-                                                <div class="col-sm-auto my-1">
-                                                    <input class="form-control" style="text-align: center;" type="text" id="resultado2" value="<?php echo $value['resultado2'] ?>">
-                                                </div>
-                                                <div class="col-sm-auto my-1">
-                                                    <label class="col-form-label"><h1><?php echo $value['curso2'] ?></h1></label>
-                                                </div>
-
-                                                <div class="search-box pull-left col-md-6 col-sm-8 my-3 clearfix">
-                                                    <input id="curso1" type="text" placeholder="Search...">
-                                                    <i class="ti-search"></i>  
-                                                </div>
-                                                <div class="search-box pull-left col-md-6 col-sm-8 my-3 clearfix">
-                                                    <input id="curso2" type="text" placeholder="Search...">
-                                                    <i class="ti-search"></i>
-                                                </div>
-
-                                                <div class="col-lg-6 mt-5">
-                                                        <div class="single-table">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-hover text-center">
-                                                                    <thead class="text-uppercase bg-primary">
-                                                                        <tr class="text-white">
-                                                                            <th scope="col">Número</th>
-                                                                            <th scope="col">Jogador</th>
-                                                                            <th scope="col">Gols/pontos</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th> 
-                                                                                <input type="number" id="numero">
-                                                                            </th>
-                                                                            <td>Mark</td>
-                                                                            <td>
-                                                                                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                                                                <input type="number" id="number" value="0" />
-                                                                                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                                <div class="col-lg-6 mt-5">
-                                                        <div class="single-table">
-                                                            <div class="table-responsive">
-                                                                <table class="table table-hover text-center">
-                                                                    <thead class="text-uppercase bg-primary">
-                                                                        <tr class="text-white">
-                                                                            <th scope="col">Número</th>
-                                                                            <th scope="col">Jogador</th>
-                                                                            <th scope="col">Gols/pontos</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <th> 
-                                                                                <input type="number" id="numero">
-                                                                            </th>
-                                                                            <td>Mark</td>
-                                                                            <td>
-                                                                                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                                                                <input type="number" id="number" value="0" />
-                                                                                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
+                                <form class="form-group" method="POST" action="<?php echo site_url('CadastraPartida/Jogadores');?>">
+                                <?php foreach($partida AS $value): ?>
+                                    <div class="form-row" style="text-align: center;">
+                                        <div class="col-lg-4 mt-1">
+                                            <label class="col-form-label"><h1><?php echo $value['curso1'] ?></h1></label> 
+                                        </div>
+                                        <div class="col-lg-1 mt-1">
+                                            <input class="form-control" type="text" id="resultado1" value="<?php echo $value['resultado1'] ?>" style="text-align: center; width: 80px; height: 80px; font-size: 40px; color: black">
+                                        </div>
+                                        <div class="col-lg-2 mt-1">
+                                            <h2>X</h2>
+                                        </div>
+                                        <div class="col-lg-1 mt-1">
+                                            <input class="form-control" type="text" id="resultado2" value="<?php echo $value['resultado2'] ?>" style="text-align: center; width: 80px; height: 80px; font-size: 40px; color: black">
+                                        </div>
+                                        <div class="col-lg-4 mt-1">
+                                            <label class="col-form-label"><h1><?php echo $value['curso2'] ?></h1></label>
+                                        </div>
+                                        <div class="col-lg-12 mt-1">
+                                            <label class="col-form-label"><h1><?php echo $value['curso2'] ?></h1></label>
+                                        </div>
+                                        <div class="col-lg-6 mt-5">
+                                            <div class="single-table">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover text-center">
+                                                        <thead class="text-uppercase bg-primary">
+                                                            <tr class="text-white">
+                                                                <th scope="col">Número</th>
+                                                                <th scope="col">Jogador</th>
+                                                                <th scope="col">Gols/pontos</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php 
+                                                                if(!empty($jogador_partida1)):
+                                                                    $i = 0;
+                                                                    foreach($jogador_partida1 AS $row1):
+                                                                        $i++;
+                                                            ?>
+                                                            <tr>
+                                                                <td type="number" id="numero"><?php echo $row1['numero']?></td>
+                                                                <td><?php echo $row1['nome']?></td>
+                                                                <td>
+                                                                    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                                                                    <input type="number" id="number" value="0" />
+                                                                    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                                                                </td>
+                                                            </tr>
+                                                            <?php endforeach; endif; ?>
+                                                        </tbody>
+                                                        <th>
+                                                            <a class="btn" data-toggle="modal" data-target="#<?php echo $value['curso1'] ?>" style="background-color: green; color: white; width: 40px; height: 40px;">+</a>
+                                                        </th>
+                                                    </table>
                                                 </div>
                                             </div>
-                                            
-                                        <?php endforeach; ?>
-                                            <div style="text-align: right;" >
-                                                <button type="button" class="btn btn-danger">Cancelar</button>
-                                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                        </div>
+                                        <div class="col-lg-6 mt-5">
+                                            <div class="single-table" align="top">
+                                                <div class="table-responsive" align="top">
+                                                    <table class="table table-hover text-center" align="top">
+                                                        <thead class="text-uppercase bg-primary">
+                                                            <tr class="text-white">
+                                                                <th scope="col">Número</th>
+                                                                <th scope="col">Jogador</th>
+                                                                <th scope="col">Gols/pontos</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php 
+                                                                if(!empty($jogador_partida2)):
+                                                                    foreach($jogador_partida2 AS $row2):
+                                                            ?>
+                                                            <tr>
+                                                                <td type="number" id="numero"><?php echo $row2['numero']?></td>
+                                                                <td><?php echo $row2['nome']?></td>
+                                                                <td>
+                                                                    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                                                                    <input type="number" id="number" value="0" />
+                                                                    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                                                                </td>
+                                                            </tr>
+                                                            <?php endforeach; endif; ?>
+                                                        </tbody>
+                                                        <th>
+                                                            <a class="btn" data-toggle="modal" data-target="#<?php echo $value['curso2'] ?>" style="background-color: green; color: white; width: 40px; height: 40px;">+</a>
+                                                        </th>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </form>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                    <div style="text-align: right;" >
+                                        <button type="button" class="btn btn-danger">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </div>
+                                </form>
+                                <div class="modal fade" id="<?php echo $value['curso1'] ?>">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Inserir jogador <?php echo $value['curso1'] ?></h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body ui-front">
+                                                <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/insereJogador/' . $value['cod_jogo']; ?>">
+                                                    <label for="example-text-input" class="col-form-label">Nome</label>
+                                                    <input class="form-control" type="text" name="nome_jogador" id="nome_jogador">
+                                                    <label for="example-text-input" class="col-form-label">Número</label>
+                                                    <input class="form-control" type="text" name="numero_jogador" id="numero_jogador">
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Inserir</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="<?php echo $value['curso2'] ?>">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Inserir jogador <?php echo $value['curso2'] ?></h5>
+                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                            </div>
+                                            <div class="modal-body ui-front">
+                                                <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/insereJogador/' . $value['cod_jogo']; ?>">
+                                                    <label for="example-text-input" class="col-form-label">Nome</label>
+                                                    <input class="form-control" type="text" name="nome_jogador" id="nome_jogador">
+                                                    <label for="example-text-input" class="col-form-label">Número</label>
+                                                    <input class="form-control" type="text" name="numero_jogador" id="numero_jogador">
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary">Inserir</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -294,15 +350,36 @@ $partida = $this->session->flashdata('partida');
 
    <script type="text/javascript">
         $(document).ready(function(){
-            $("#curso1").autocomplete({
+            $("#nome_jogador").autocomplete({
               source: "<?php echo site_url('CadastraPartida/pesquisa/?');?>"
             });
         });
+
+        /*$(document).ready(function(){
+             $( "#nome_jogador" ).autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "<?php echo site_url('CadastraPartida/pesquisa/?');?>",
+                        dataType: "json",
+                        data: {
+                            time: $value['curso1'],
+                            data: $('#nome_jogador').val()
+                        },
+                        success: function(data) {
+                           response(data);
+                        }
+                    });
+                }
+            });
+        });*/
+         
     </script>
+
+
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#curso2").autocomplete({
+            $("#nome_jogador").autocomplete({
               source: "<?php echo site_url('CadastraPartida/pesquisa/?');?>"
             });
         });

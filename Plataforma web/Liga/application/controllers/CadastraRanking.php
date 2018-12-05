@@ -11,18 +11,27 @@ class CadastraRanking extends CI_Controller {
 	// Encaminha para os menus laterais
 	public function Index()
 	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
+
+
 		$this->load->model('Ranking_model');
-		$ranking = $this->Ranking_model->listarRanking();
+		$ranking = $this->Ranking_model->listarRanking($campeonato);
 		$this->session->set_flashdata('ranking', $ranking);
-		$this->load->view('ranking');
+		
 
 		$this->load->model('Curso_model');
-		$cursos = $this->Curso_model->listarCursos();
+		$cursos = $this->Curso_model->listarCursos($campeonato);
 		$this->session->set_flashdata('cursos', $cursos);
+
+		$this->load->view('ranking');
 		
 	}
 	public function atualiza()
 	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
+
 
 		$this->load->library('form_validation');
 
@@ -32,10 +41,20 @@ class CadastraRanking extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$mensagem = array('mensagem_erro' => validation_errors());
-			$this->load->view('ranking', $mensagem);
+			$this->load->model('Ranking_model');
+			$ranking = $this->Ranking_model->listarRanking($campeonato);
+			$this->session->set_flashdata('ranking', $ranking);
+			
+
+			$this->load->model('Curso_model');
+			$cursos = $this->Curso_model->listarCursos($campeonato);
+			$this->session->set_flashdata('cursos', $cursos);
+
+			$this->load->view('ranking');
 		} else {
 			$data = array(
 			'curso' => $this->input->post('curso'),
+			'cod_campeonato' => $campeonato,
 			'pontuacao' => $this->input->post('pontuacao'));
 			//Transfering data to Model
 
@@ -45,13 +64,15 @@ class CadastraRanking extends CI_Controller {
 
 			//Loading View
 			$this->load->model('Ranking_model');
-			$ranking = $this->Ranking_model->listarRanking();
+			$ranking = $this->Ranking_model->listarRanking($campeonato);
 			$this->session->set_flashdata('ranking', $ranking);
-			$this->load->view('ranking');
+			
 
 			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos();
+			$cursos = $this->Curso_model->listarCursos($campeonato);
 			$this->session->set_flashdata('cursos', $cursos);
+
+			$this->load->view('ranking');
 		}
 	}
 

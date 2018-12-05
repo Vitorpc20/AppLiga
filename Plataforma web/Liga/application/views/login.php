@@ -52,9 +52,8 @@
                         <div class="submit-btn-area">
                             <button id="entrar" type="submit">Entrar <i class="ti-arrow-right"></i></button>
                         </div>
-                        <?php 
-                            if(!empty($data)) 
-                                echo "<html><div class='alert alert-danger' role='alert'>".$data['mensagem_erro']."</div></html>"; 
+                       <?php 
+                            if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
                         ?>
                     </div>
                 </form>

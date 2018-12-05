@@ -11,17 +11,23 @@ class CadastraPartida extends CI_Controller {
 	// Encaminha para os menus laterais
 	public function Index()
 	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
+
 		$this->load->model('Partida_model');
-		$partidas = $this->Partida_model->listarPartidas();
+		$partidas = $this->Partida_model->listarPartidas($campeonato);
 		$this->session->set_flashdata('partidas', $partidas);
-		$this->load->view('cadastro_partida');
 
 		$this->load->model('Curso_model');
-		$cursos = $this->Curso_model->listarCursos();
+		$cursos = $this->Curso_model->listarCursos($campeonato);
 		$this->session->set_flashdata('cursos', $cursos);
+
+		$this->load->view('cadastro_partida');
 	}
 	public function cadastra()
 	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
 
 		$this->load->library('form_validation');
 
@@ -42,10 +48,20 @@ class CadastraPartida extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$mensagem = array('mensagem_erro' => validation_errors());
+			//Loading View
+			$this->load->model('Partida_model');
+			$partidas = $this->Partida_model->listarPartidas($campeonato);
+			$this->session->set_flashdata('partidas', $partidas);
+			
+			$this->load->model('Curso_model');
+			$cursos = $this->Curso_model->listarCursos($campeonato);
+			$this->session->set_flashdata('cursos', $cursos);
+
 			$this->load->view('cadastro_partida', $mensagem);
 		} else {
+
 			$data = array(
-			'cod_campeonato' => '1',
+			'cod_campeonato' => $campeonato,
 			'modalidade' => $this->input->post('modalidade'),
 			'data' => $this->input->post('data'),
 			'horario' => $this->input->post('horario'),
@@ -62,13 +78,14 @@ class CadastraPartida extends CI_Controller {
 
 			//Loading View
 			$this->load->model('Partida_model');
-			$partidas = $this->Partida_model->listarPartidas();
+			$partidas = $this->Partida_model->listarPartidas($campeonato);
 			$this->session->set_flashdata('partidas', $partidas);
-			$this->load->view('cadastro_partida', $mensagem);
-
+			
 			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos();
+			$cursos = $this->Curso_model->listarCursos($campeonato);
 			$this->session->set_flashdata('cursos', $cursos);
+
+			$this->load->view('cadastro_partida', $mensagem);
 		}
 	}
 	public function diff_cursos()
@@ -88,25 +105,30 @@ class CadastraPartida extends CI_Controller {
     {
     	$data = $this->uri->segment(3);
 		$data = rawurldecode($data);
+		$campeonato = $this->uri->segment(4);
+		$campeonato = rawurldecode($campeonato);
 
 		$this->load->model('Partida_model');
 		$this->Partida_model->deletarPartida($data);
 		$mensagem = ['mensagem_excluido' => "Partida excluída!"];
 
 		$this->load->model('Partida_model');
-		$partidas = $this->Partida_model->listarPartidas();
+		$partidas = $this->Partida_model->listarPartidas($campeonato);
 		$this->session->set_flashdata('partidas', $partidas);
-		$this->load->view('cadastro_partida', $mensagem);
 
 		$this->load->model('Curso_model');
-		$cursos = $this->Curso_model->listarCursos();
+		$cursos = $this->Curso_model->listarCursos($campeonato);
 		$this->session->set_flashdata('cursos', $cursos);
+
+		$this->load->view('cadastro_partida', $mensagem);
     }
 
     public function atualiza()
     {
     	$data = $this->uri->segment(3);
 		$data = rawurldecode($data);
+		$campeonato = $this->uri->segment(4);
+		$campeonato = rawurldecode($campeonato);
 
 		$this->load->library('form_validation');
 
@@ -126,10 +148,16 @@ class CadastraPartida extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$mensagem = array('mensagem_erro' => validation_errors());
+			$this->load->model('Partida_model');
+			$partidas = $this->Partida_model->listarPartidas($campeonato);
+			$this->session->set_flashdata('partidas', $partidas);
+
+			$this->load->model('Curso_model');
+			$cursos = $this->Curso_model->listarCursos($campeonato);
+			$this->session->set_flashdata('cursos', $cursos);
 			$this->load->view('cadastro_partida', $mensagem);
 		} else {
 			$partida = array(
-			'cod_campeonato' => '1',
 			'modalidade' => $this->input->post('modalidade'),
 			'data' => $this->input->post('data'),
 			'horario' => $this->input->post('horario'),
@@ -145,13 +173,14 @@ class CadastraPartida extends CI_Controller {
 
 			//Loading View
 			$this->load->model('Partida_model');
-			$partidas = $this->Partida_model->listarPartidas();
+			$partidas = $this->Partida_model->listarPartidas($campeonato);
 			$this->session->set_flashdata('partidas', $partidas);
-			$this->load->view('cadastro_partida', $mensagem);
 
 			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos();
+			$cursos = $this->Curso_model->listarCursos($campeonato);
 			$this->session->set_flashdata('cursos', $cursos);
+
+			$this->load->view('cadastro_partida', $mensagem);
 		}
     }
 
@@ -168,9 +197,11 @@ class CadastraPartida extends CI_Controller {
 
     public function pesquisa()
     {
+    	#$curso = (isset($_GET['curso'])) ? $_GET['curso'] : '';
+		#$data = (isset($_GET['data'])) ? $_GET['data'] : '';
     	 if (isset($_GET['term'])) {
-    	 	$this->load->model('Partida_model');
-            $result = $this->Partida_model->jogador_partida($_GET['term']);
+    	 	$this->load->model('Jogador_model');
+            $result = $this->Jogador_model->buscaAuto($_GET['term']);
             if (count($result) > 0) {
 	            foreach ($result as $row)
 	            $arr_result[] = $row->nome;
@@ -179,9 +210,66 @@ class CadastraPartida extends CI_Controller {
         }
     }
 
-    public function Jogadores()
+	public function partida_jogador(){
+
+		$cod_jogo = $this->uri->segment(3);
+		$cod_jogo = rawurldecode($cod_jogo);
+
+		$this->load->model('Partida_model');
+		$partida = $this->Partida_model->selecionaPartida($cod_jogo);
+		$this->session->set_flashdata('partida', $partida);
+
+		foreach ($partida AS $jogo)
+
+		$this->load->model('Jogador_model');
+		$jogador_partida1 = $this->Jogador_model->selecionaJogadorPartidaTime1($cod_jogo, $jogo);
+		$this->session->set_flashdata('jogador_partida1', $jogador_partida1);
+
+		$this->load->model('Jogador_model');
+		$jogador_partida2 = $this->Jogador_model->selecionaJogadorPartidaTime2($cod_jogo, $jogo);
+		$this->session->set_flashdata('jogador_partida2', $jogador_partida2);
+
+
+		$this->load->view('partida_jogador');
+
+	}
+
+	public function insereJogador()
     {
-    	
+    	$cod_jogo = $this->uri->segment(3);
+		$cod_jogo = rawurldecode($cod_jogo);
+
+		$this->load->model('Jogador_model');
+		$jogador = $this->input->post('nome_jogador');
+		$cod_jogador = $this->Jogador_model->selecionaJogador($jogador);
+
+		foreach ($cod_jogador as $value)
+
+
+		$novo_jogador_partida = array(
+			'cod_jogo' => $cod_jogo,
+			'cod_jogador' => $value['cod_jogador'],
+			'numero' => $this->input->post('numero_jogador')
+		);
+
+		$this->load->model('Jogador_model');
+		$this->Jogador_model->insereJogadorPartida($novo_jogador_partida);
+
+		$this->load->model('Partida_model');
+		$partida = $this->Partida_model->selecionaPartida($cod_jogo);
+		$this->session->set_flashdata('partida', $partida);
+
+		foreach ($partida AS $jogo)
+		
+		$this->load->model('Jogador_model');
+		$jogador_partida1 = $this->Jogador_model->selecionaJogadorPartidaTime1($cod_jogo, $jogo);
+		$this->session->set_flashdata('jogador_partida1', $jogador_partida1);
+
+		$this->load->model('Jogador_model');
+		$jogador_partida2 = $this->Jogador_model->selecionaJogadorPartidaTime2($cod_jogo, $jogo);
+		$this->session->set_flashdata('jogador_partida2', $jogador_partida2);
+
+		$this->load->view('partida_jogador');
     }
 }
 ?>

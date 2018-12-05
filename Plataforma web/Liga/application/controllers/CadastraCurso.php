@@ -12,7 +12,7 @@ class CadastraCurso extends CI_Controller {
 	public function index()
 	{
 		$this->load->model('Curso_model');
-		$cursos = $this->Curso_model->listarCursos();
+		$cursos = $this->Curso_model->listarTodosCursos();
 		$this->session->set_flashdata('cursos', $cursos);
 		$this->load->view('cadastro_curso');
 	}
@@ -47,7 +47,7 @@ class CadastraCurso extends CI_Controller {
 
 			//Loading View
 			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos();
+			$cursos = $this->Curso_model->listarTodosCursos();
 			$this->session->set_flashdata('cursos', $cursos);
 			$this->load->view('cadastro_curso', $mensagem);
 		}
@@ -62,7 +62,7 @@ class CadastraCurso extends CI_Controller {
 		$mensagem = ['mensagem_excluido' => "Curso excluído!"];
 
 		$this->load->model('Curso_model');
-		$cursos = $this->Curso_model->listarCursos();
+		$cursos = $this->Curso_model->listarTodosCursos();
 		$this->session->set_flashdata('cursos', $cursos);
 		$this->load->view('cadastro_curso', $mensagem);
 	}
@@ -90,6 +90,9 @@ class CadastraCurso extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$mensagem = array('mensagem_erro' => validation_errors());
+			$this->load->model('Curso_model');
+			$cursos = $this->Curso_model->listarTodosCursos();
+			$this->session->set_flashdata('cursos', $cursos);
 			$this->load->view('cadastro_curso', $mensagem);
 		} else {
 			
@@ -98,13 +101,88 @@ class CadastraCurso extends CI_Controller {
 
 			$this->load->model("Curso_model");
 			$this->Curso_model->atualiza($data, $velho);
+			$mensagem = ['mensagem_atualiza' => "Curso atualizado!"];
 
 			//Loading View
 			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos();
+			$cursos = $this->Curso_model->listarTodosCursos();
 			$this->session->set_flashdata('cursos', $cursos);
-			$this->load->view('cadastro_curso');
+			$this->load->view('cadastro_curso', $mensagem);
 		}
+	}
+	public function curso_campeonato()
+	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
+
+		$this->load->model('Curso_model');
+		$cursosTodos = $this->Curso_model->listarTodosCursos();
+		$cursosAtuais = $this->Curso_model->listarCursos($campeonato);
+		$this->session->set_flashdata('cursosAtuais', $cursosAtuais);
+		$this->session->set_flashdata('cursosTodos', $cursosTodos);
+		$this->load->view('curso_campeonato');
+	}
+	public function adicionaCursoCampeonato()
+	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('curso', 'Nome', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$mensagem = array('mensagem_erro' => validation_errors());
+			$this->load->model('Curso_model');
+			$cursosTodos = $this->Curso_model->listarTodosCursos();
+			$cursosAtuais = $this->Curso_model->listarCursos($campeonato);
+			$this->session->set_flashdata('cursosAtuais', $cursosAtuais);
+			$this->session->set_flashdata('cursosTodos', $cursosTodos);
+			$this->load->view('curso_campeonato', $mensagem);
+		} else {
+
+			$data = array(
+				'curso' => $this->input->post('curso'),
+				'cod_campeonato' => $campeonato,
+				'pontuacao' => 0
+			);
+
+			$this->load->model("Curso_model");
+			$this->Curso_model->adiciona($data);
+			$mensagem = ['mensagem_adiciona' => "Curso adicionado!"];
+
+
+			$this->load->model('Curso_model');
+			$cursosTodos = $this->Curso_model->listarTodosCursos();
+			$cursosAtuais = $this->Curso_model->listarCursos($campeonato);
+			$this->session->set_flashdata('cursosAtuais', $cursosAtuais);
+			$this->session->set_flashdata('cursosTodos', $cursosTodos);
+			$this->load->view('curso_campeonato', $mensagem);
+		}
+	}
+
+	public function removeCursoCampeonato()
+	{
+		$curso = $this->uri->segment(3);
+		$curso = rawurldecode($curso);
+		$campeonato = $this->uri->segment(4);
+		$campeonato = rawurldecode($campeonato);
+
+		$data = array(
+				'curso' => $curso,
+				'cod_campeonato' => $campeonato
+			);
+
+		$this->load->model('Curso_model');
+		$this->Curso_model->removeCursoCampeonato($data);
+		$mensagem = ['mensagem_removido' => "Curso removido!"];
+
+		$this->load->model('Curso_model');
+		$cursosTodos = $this->Curso_model->listarTodosCursos();
+		$cursosAtuais = $this->Curso_model->listarCursos($campeonato);
+		$this->session->set_flashdata('cursosAtuais', $cursosAtuais);
+		$this->session->set_flashdata('cursosTodos', $cursosTodos);
+		$this->load->view('curso_campeonato', $mensagem);
 	}
 }
 ?>

@@ -1,8 +1,8 @@
 <?php 
 $partidas = $this->session->flashdata('partidas');
- ?>
 
-<?php 
+$campeonato = $this->session->userdata('campeonato');
+
 $cursos = $this->session->flashdata('cursos');
 ?>
 
@@ -57,23 +57,22 @@ $cursos = $this->session->flashdata('cursos');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
+                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="ti-dashboard"></i><span><< Mais Campeonatos</span></a>
                             </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraCampeonato')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span>Cadastro campeonato</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Jogadores</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraRanking')?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
-                            </li>
+                            <?php foreach ($campeonato as $value): ?>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos Participantes</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro de Jogadores</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro e gerência de Partidas</span></a> 
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
+                                </li>
+                            <?php endforeach ?>
                         </ul>
                     </nav>
                 </div>
@@ -98,9 +97,6 @@ $cursos = $this->session->flashdata('cursos');
                         <ul class="notification-area pull-right">
                             <li id="full-view"><i class="ti-fullscreen"></i></li>
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                            <li class="settings-btn">
-                                <i class="ti-settings"></i>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -114,7 +110,10 @@ $cursos = $this->session->flashdata('cursos');
                             <h4 class="page-title pull-left">Partidas</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="<?php echo site_url('Index');?>">Home</a></li>
-                                <li><span>Formulário de partida</span></li>
+                                <li><a href="<?php echo site_url('Index/campeonatos');?>">Campeonatos</a></li>
+                                <li><span><?php foreach ($campeonato as $value): ?>
+                                    <?php echo $value['nome'] ?> <?php echo $value['ano'] ?>
+                                <?php endforeach ?> - Cadastro e Gerência de Partidas</span></li>
                             </ul>
                         </div>
                     </div>
@@ -139,10 +138,14 @@ $cursos = $this->session->flashdata('cursos');
                             <div class="col-12 mt-5">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">Cadastar partida</h4>
+                                        <h4 class="header-title">Cadastrar partida</h4>
                                         <p class="text-muted font-14 mb-4"></p>
+                                        <?php 
+                                            foreach($campeonato AS $value):
+                                        ?>
+                                        <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/cadastra/' . rawurlencode($value['cod_campeonato']); ?>">
+                                        <?php endforeach; ?>
 
-                                        <form class="form-group" method="POST" action="<?php echo site_url('CadastraPartida/cadastra');?>">
                                             <label class="col-form-label" >Modalidade</label>
                                             <select class="form-control" name="modalidade">
                                                 <option selected="true" disabled="disabled" >Selecionar modalidade</option>
@@ -169,7 +172,7 @@ $cursos = $this->session->flashdata('cursos');
                                                         <?php 
                                                             foreach($cursos AS $value):
                                                         ?>
-                                                        <option><?php echo $value['nome'] ?></option>
+                                                        <option><?php echo $value['curso'] ?></option>
                                                         
                                                         <?php endforeach; ?>
                                                     </select>
@@ -181,7 +184,7 @@ $cursos = $this->session->flashdata('cursos');
                                                         <?php 
                                                             foreach($cursos AS $value):
                                                         ?>
-                                                        <option><?php echo $value['nome'] ?></option>
+                                                        <option><?php echo $value['curso'] ?></option>
                                                         
                                                         <?php endforeach; ?>
                                                     </select>
@@ -199,6 +202,7 @@ $cursos = $this->session->flashdata('cursos');
                                             </div>
                                         <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4 al" id="botao_cadastrar_campeonato">Cadastrar</button> 
                                     </form>
+
                                     <?php 
                                         if(isset($mensagem_cadastro)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_cadastro."</div></html>"; 
                                         if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
@@ -219,7 +223,7 @@ $cursos = $this->session->flashdata('cursos');
                                                         <th scope="col">Modalidade</th>
                                                         <th scope="col">Hora/Data</th>
                                                         <th scope="col">Editar/Excluir</th>
-                                                        <th scope="col">Visualizar</th>
+                                                        <th scope="col">Jogadores</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -233,10 +237,13 @@ $cursos = $this->session->flashdata('cursos');
                                                         <td>
                                                             <ul class="d-flex justify-content-center">
                                                                 <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $value['cod_jogo'] ?>" class="text-secondary"><i style="cursor:pointer" class="fa fa-edit"></i></a></li>
-                                                                <li><a href="<?php echo site_url() . '/CadastraPartida/remove/' . rawurlencode($value['cod_jogo']); ?>" class="text-danger"><i style="cursor:pointer" class="ti-trash"></i></a></li>
+                                                                <?php foreach($campeonato AS $value2): ?>
+                                                                <li><a href="<?php echo site_url() . '/CadastraPartida/remove/' . $value['cod_jogo'] . '/' . $value2['cod_campeonato']; ?>" class="text-danger"><i style="cursor:pointer" class="ti-trash"></i></a></li>
+                                                                <?php endforeach; ?> 
                                                             </ul>
                                                         </td>
-                                                        <th><a href="<?php echo site_url() . '/CadastraPartida/Visualizar/' . rawurlencode($value['cod_jogo']); ?>" ><i style="cursor:pointer" class="fa fa-list-alt"></i></a>
+                                                        <th>
+                                                            <a href="<?php echo site_url() . '/CadastraPartida/partida_jogador/' . $value['cod_jogo'] . '/' . $value2['cod_campeonato']; ?>" class="text-secondary"><i style="cursor:pointer" class="fa fa-edit"></i></a>   
                                                         </th>
                                                     </tr>
                                                     <div class="modal fade" id="<?php echo $value['cod_jogo'] ?>">
@@ -247,65 +254,67 @@ $cursos = $this->session->flashdata('cursos');
                                                                         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                       <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/atualiza/' . $value['cod_jogo']; ?>">
-                                                                                <label class="col-form-label">Modalidade</label>
-                                                                                <select class="form-control" name="modalidade">
-                                                                                    <option><?php echo $value['modalidade'] ?></option>
-                                                                                    <option id="feminino_futsal">Feminino Futsal</option>
-                                                                                    <option id="feminino_basquete">Feminino Basquete</option>
-                                                                                    <option id="feminino_handebol">Feminino Handebol</option>
-                                                                                    <option id="feminino_voleibol">Feminino Voleibol</option>
-                                                                                    <option id="masculino_futsal">Masculino Futsal</option>
-                                                                                    <option id="masculino_basquete">Masculino Basquete</option>
-                                                                                    <option id="masculino_handebol">Masculino Handebol</option>
-                                                                                    <option id="masculino_voleibol">Masculino Voleibol</option>
-                                                                                </select>
+                                                                        <?php foreach($campeonato AS $value2): ?> 
+                                                                        <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/atualiza/' . $value['cod_jogo'] . '/' . $value2['cod_campeonato']; ?>">
+                                                                        <?php endforeach; ?>         
+                                                                            <label class="col-form-label">Modalidade</label>
+                                                                            <select class="form-control" name="modalidade">
+                                                                                <option><?php echo $value['modalidade'] ?></option>
+                                                                                <option id="feminino_futsal">Feminino Futsal</option>
+                                                                                <option id="feminino_basquete">Feminino Basquete</option>
+                                                                                <option id="feminino_handebol">Feminino Handebol</option>
+                                                                                <option id="feminino_voleibol">Feminino Voleibol</option>
+                                                                                <option id="masculino_futsal">Masculino Futsal</option>
+                                                                                <option id="masculino_basquete">Masculino Basquete</option>
+                                                                                <option id="masculino_handebol">Masculino Handebol</option>
+                                                                                <option id="masculino_voleibol">Masculino Voleibol</option>
+                                                                            </select>
 
-                                                                                <label class="col-form-label">Data</label>
-                                                                                <input class="form-control" type="date" name="data" id="data" value="<?php echo $value['data'] ?>">
+                                                                            <label class="col-form-label">Data</label>
+                                                                            <input class="form-control" type="date" name="data" id="data" value="<?php echo $value['data'] ?>">
 
-                                                                                <label class="col-form-label">Horário</label>
-                                                                                <input class="form-control" type="time" name="horario" id="horario" value="<?php echo $value['horario'] ?>">
-                                                                                <div class="form-row align-items-center">
-                                                                                    <div class="col-sm-6 my-1">
-                                                                                        <label class="col-form-label">Curso 1</label>
-                                                                                        <select class="form-control" name="curso1">
-                                                                                           <option><?php echo $value['curso1'] ?></option>
-                                                                                            <?php 
-                                                                                                foreach($cursos AS $curso):
-                                                                                            ?>
-                                                                                            <option><?php echo $curso['nome'] ?></option>
-                                                                                            
-                                                                                            <?php endforeach; ?>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                    <div class="col-sm-6 my-1">
-                                                                                        <label class="col-form-label">Curso 2</label>
-                                                                                        <select class="form-control" name="curso2">
-                                                                                            <option><?php echo $value['curso2'] ?></option>
-                                                                                            <?php 
-                                                                                                foreach($cursos AS $curso):
-                                                                                            ?>
-                                                                                            <option><?php echo $curso['nome'] ?></option>
-                                                                                            
-                                                                                            <?php endforeach; ?>
-                                                                                        </select>
-                                                                                    </div>
+                                                                            <label class="col-form-label">Horário</label>
+                                                                            <input class="form-control" type="time" name="horario" id="horario" value="<?php echo $value['horario'] ?>">
+                                                                            <div class="form-row align-items-center">
+                                                                                <div class="col-sm-6 my-1">
+                                                                                    <label class="col-form-label">Curso 1</label>
+                                                                                    <select class="form-control" name="curso1">
+                                                                                       <option><?php echo $value['curso1'] ?></option>
+                                                                                        <?php 
+                                                                                            foreach($cursos AS $curso):
+                                                                                        ?>
+                                                                                        <option><?php echo $curso['nome'] ?></option>
+                                                                                        
+                                                                                        <?php endforeach; ?>
+                                                                                    </select>
                                                                                 </div>
-                                                                                <div class="form-row align-items-center">
-                                                                                    <div class="col-sm-6 my-1">
-                                                                                        <label for="example-text-input" class="col-form-label">Resultado Curso 1</label>
-                                                                                        <input class="form-control" type="text" name="resultado1" id="resultado1" value="<?php echo $value['resultado1'] ?>">
-                                                                                    </div>
-                                                                                    <div class="col-sm-6 my-1">
-                                                                                        <label for="example-text-input" class="col-form-label">Resultado Curso 2</label>
-                                                                                        <input class="form-control" type="text" name="resultado2" id="resultado2" value="<?php echo $value['resultado2'] ?>">
-                                                                                    </div>
+                                                                                <div class="col-sm-6 my-1">
+                                                                                    <label class="col-form-label">Curso 2</label>
+                                                                                    <select class="form-control" name="curso2">
+                                                                                        <option><?php echo $value['curso2'] ?></option>
+                                                                                        <?php 
+                                                                                            foreach($cursos AS $curso):
+                                                                                        ?>
+                                                                                        <option><?php echo $curso['nome'] ?></option>
+                                                                                        
+                                                                                        <?php endforeach; ?>
+                                                                                    </select>
                                                                                 </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                                                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                                                            </div>
+                                                                            <div class="form-row align-items-center">
+                                                                                <div class="col-sm-6 my-1">
+                                                                                    <label for="example-text-input" class="col-form-label">Resultado Curso 1</label>
+                                                                                    <input class="form-control" type="text" name="resultado1" id="resultado1" value="<?php echo $value['resultado1'] ?>">
                                                                                 </div>
+                                                                                <div class="col-sm-6 my-1">
+                                                                                    <label for="example-text-input" class="col-form-label">Resultado Curso 2</label>
+                                                                                    <input class="form-control" type="text" name="resultado2" id="resultado2" value="<?php echo $value['resultado2'] ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                                                            </div>
                                                                         </form>
                                                                          <?php 
                                                                             if(isset($mensagem_cadastro)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_cadastro."</div></html>"; 
@@ -337,23 +346,7 @@ $cursos = $this->session->flashdata('cursos');
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
-    <!-- offset area start -->
-    <div class="offset-area">
-        <div class="offset-close"><i class="ti-close"></i></div>
-        <ul class="nav offset-menu-tab">
-            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
-            <li><a data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
-        <div class="offset-content tab-content">
-            <div id="activity" class="tab-pane fade in show active">
 
-            </div>
-            <div id="settings" class="tab-pane fade">
-
-            </div>
-        </div>
-    </div>
-    <!-- offset area end -->
     <!-- jquery latest version -->
     <script src="<?php echo base_url ('assets/js/vendor/jquery-2.2.4.min.js')?>"></script>
     <!-- bootstrap 4 js -->

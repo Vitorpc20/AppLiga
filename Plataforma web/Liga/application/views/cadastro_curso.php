@@ -57,22 +57,13 @@ $curso = $this->session->flashdata('curso');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
+                                <a href="<?php echo site_url('Index/');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCampeonato')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cadastro campeonato </span></a>
+                                <a href="<?php echo site_url ('Index/campeonatos')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Campeonatos </span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Jogadores</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraRanking')?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
+                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cursos </span></a>
                             </li>
                         </ul>
                     </nav>
@@ -139,15 +130,36 @@ $curso = $this->session->flashdata('curso');
                             <div class="col-12 mt-5">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">Cadastrar curso</h4>
-                                        <form class="form-group" method="POST" action="<?php echo site_url('CadastraCurso/cadastra');?>">
-                                            <label for="example-text-input" class="col-form-label">Nome</label>
-                                            <input class="form-control" type="text" name="nome_curso" id="nome_curso">
-                                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4" id="botao_cadastrar_curso">Cadastrar</button>
-                                        </form>
+                                        <h4 class="header-title">Novo Curso</h4> 
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary mt-4 pr-4 pl-4" data-toggle="modal" data-target="#modalCadastro">Cadastrar</button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modalCadastro">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Cadastrar Novo Curso</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                                    </div>
+                                                    <form class="form-group" method="POST" action="<?php echo site_url('CadastraCurso/cadastra');?>">
+                                                        <div class="modal-body">
+                                                            <label for="example-text-input" class="col-form-label">Nome</label>
+                                                            <input class="form-control" type="text" name="nome_curso" id="nome_curso">
+                                        
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                            <button type="submit" class="btn btn-primary" id="botao_cadastrar_curso">Cadastrar</button>
+                                                        </div>
+                                                    </form>
+                                                    <?php 
+                                                        if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div> 
                                         <?php 
                                             if(isset($mensagem_cadastro)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_cadastro."</div></html>"; 
-                                            if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
                                         ?>
                                     </div> 
                                 </div>
@@ -155,6 +167,9 @@ $curso = $this->session->flashdata('curso');
                             <div class="col-12 mt-5">
                                 <div class="card">
                                     <div class="card-body">
+                                        <?php 
+                                            if(isset($mensagem_excluido)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_excluido."</div></html>"; 
+                                        ?>
                                         <h4 class="header-title">Cursos</h4>
                                         <div class="single-table">
                                             <div class="table-responsive">

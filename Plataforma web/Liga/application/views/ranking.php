@@ -1,8 +1,8 @@
 <?php 
 $ranking = $this->session->flashdata('ranking');
-?>
 
-<?php 
+$campeonato = $this->session->userdata('campeonato');
+
 $cursos = $this->session->flashdata('cursos');
 ?>
 
@@ -60,23 +60,22 @@ $cursos = $this->session->flashdata('cursos');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
+                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="ti-dashboard"></i><span><< Mais Campeonatos</span></a>
                             </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraCampeonato')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cadastro campeonato </span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraJogador')?>" aria-expanded="true"><i class="ti-slice"></i><span>Jogadores</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraPartida')?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url ('CadastraRanking')?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
-                            </li>
+                            <?php foreach ($campeonato as $value): ?>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos Participantes</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro de Jogadores</span></a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro e gerência de Partidas</span></a> 
+                                </li>
+                                <li>
+                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
+                                </li>
+                            <?php endforeach ?>
                         </ul>
                     </nav>
                 </div>
@@ -117,7 +116,10 @@ $cursos = $this->session->flashdata('cursos');
                             <h4 class="page-title pull-left">Ranking</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="<?php echo site_url('Index');?>">Home</a></li>
-                                <li><span>Formulário de ranking</span></li>
+                                <li><a href="<?php echo site_url('Index/campeonatos');?>">Campeonatos</a></li>
+                                <li><span><?php foreach ($campeonato as $value): ?>
+                                    <?php echo $value['nome'] ?> <?php echo $value['ano'] ?>
+                                <?php endforeach ?> - Ranking</span></li>
                             </ul>
                         </div>
                     </div>
@@ -144,7 +146,7 @@ $cursos = $this->session->flashdata('cursos');
                                     <div class="card-body">
                                         <h4 class="header-title">Atualizar Ranking</h4>
 
-                                        <form class="form-group" method="POST" action="<?php echo site_url('CadastraRanking/atualiza');?>">
+                                        <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraRanking/atualiza/' . rawurlencode($value['cod_campeonato']); ?>">
                                             <div class="col-sm-3 my-1">
                                                 <label class="col-form-label" >Curso</label>
                                                 <select class="form-control" name="curso">
@@ -152,7 +154,7 @@ $cursos = $this->session->flashdata('cursos');
                                                     <?php 
                                                         foreach($cursos AS $value):
                                                     ?>
-                                                    <option><?php echo $value['nome'] ?></option>
+                                                    <option><?php echo $value['curso'] ?></option>
 
                                                     <?php endforeach; ?>
                                                 </select>

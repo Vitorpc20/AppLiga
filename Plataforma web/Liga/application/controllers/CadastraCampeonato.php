@@ -25,7 +25,10 @@ class CadastraCampeonato extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$mensagem = array('mensagem_erro' => validation_errors());
-			$this->load->view('cadastro_campeonato', $mensagem);
+			$this->load->model('Campeonato_model');
+			$campeonatos = $this->Campeonato_model->listarCampeonatos();
+			$this->session->set_flashdata('campeonatos', $campeonatos);
+			$this->load->view('campeonatos', $mensagem);
 		} else {
 			$data = array(
 			'nome' => $this->input->post('nome_campeonato'),
@@ -40,7 +43,7 @@ class CadastraCampeonato extends CI_Controller {
 			$this->load->model('Campeonato_model');
 			$campeonatos = $this->Campeonato_model->listarCampeonatos();
 			$this->session->set_flashdata('campeonatos', $campeonatos);
-			$this->load->view('cadastro_campeonato', $mensagem);
+			$this->load->view('campeonatos', $mensagem);
 		}
 	}
 }

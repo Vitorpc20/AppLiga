@@ -11,12 +11,6 @@ class Jogador_model extends CI_Model {
 	{
 		$this->db->insert('jogador', $data);
 	}
-	public function selecionaJogador()
-	{
-		#tem que terminar isso daqui talquei
-		#$query=$this->db->get('Pessoa');
-        #return $query->result();	
-	}
 	public function listarJogadores(){
 
 		$this->db->from('jogador')
@@ -29,7 +23,7 @@ class Jogador_model extends CI_Model {
 
 	public function deletarJogador($data)
 	{
-		$this->db->where('nome', $data);
+		$this->db->where('cod_jogador',$data);
 		$this->db->delete('jogador');
 	}
 
@@ -44,5 +38,55 @@ class Jogador_model extends CI_Model {
 		$this->db->where('cod_jogador', $id_jogador);
 		$this->db->update('jogador', $array);
 	}
+
+	public function buscaAuto($data)
+	{
+		#$this->db->where('cod_time', $time);
+		$this->db->like('nome', $data, 'after');
+        $this->db->order_by('nome', 'ASC');
+        return $this->db->get('jogador')->result();
+	}
+
+	public function selecionaJogador($jogador)
+	{
+		$this->db->from('jogador');
+		$this->db->where('nome', $jogador);
+		$this->db->select('cod_jogador');
+
+		$busca = $this->db->get();
+
+		return ($busca->num_rows() > 0) ? $busca->result_array() : array();
+
+		#return $busca;
+	}
+
+	public function insereJogadorPartida($data)
+	{
+	 	$this->db->insert('jogador_jogo', $data);	
+	} 
+
+	public function selecionaJogadorPartidaTime1($data, $jogo)
+    {
+    	$this->db->from("jogador AS j, jogador_jogo AS jj");
+    	$this->db->where("jj.cod_jogo", $data);
+		$this->db->where("j.cod_jogador = jj.cod_jogador");
+		$this->db->where("j.curso", $jogo["curso1"]);
+		$this->db->select("j.nome, j.curso, jj.numero");
+		$busca = $this->db->get();
+
+		return ($busca->num_rows() > 0) ? $busca->result_array() : array();
+    }
+
+    public function selecionaJogadorPartidaTime2($data, $jogo)
+    {
+    	$this->db->from("jogador AS j, jogador_jogo AS jj");
+    	$this->db->where("jj.cod_jogo", $data);
+		$this->db->where("j.cod_jogador = jj.cod_jogador");
+		$this->db->where("j.curso", $jogo["curso2"]);
+		$this->db->select("j.nome, j.curso, jj.numero");
+		$busca = $this->db->get();
+
+		return ($busca->num_rows() > 0) ? $busca->result_array() : array();
+    }
 }
 ?>

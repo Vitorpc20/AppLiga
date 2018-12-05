@@ -11,17 +11,24 @@ class CadastraJogador extends CI_Controller {
 	// Encaminha para os menus laterais
 	public function Index()
 	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
+
 		$this->load->model('Jogador_model');
 		$jogadores = $this->Jogador_model->listarJogadores();
 		$this->session->set_flashdata('jogadores', $jogadores);
-		$this->load->view('cadastro_jogador');
-
+		
 		$this->load->model('Curso_model');
-		$cursos = $this->Curso_model->listarCursos();
+		$cursos = $this->Curso_model->listarCursos($campeonato);
 		$this->session->set_flashdata('cursos', $cursos);
+
+		$this->load->view('cadastro_jogador');
 	}
 	public function cadastra()
 	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('nome_jogador', 'Nome', 'required');
@@ -30,7 +37,14 @@ class CadastraJogador extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$mensagem = array('mensagem_erro' => validation_errors());
-			$this->load->view('cadastro_jogador', $mensagem);
+			$this->load->model('Curso_model');
+			$cursos = $this->Curso_model->listarCursos($campeonato);
+			$this->session->set_flashdata('cursos', $cursos);
+
+			$this->load->model('Jogador_model');
+			$jogadores = $this->Jogador_model->listarJogadores();
+			$this->session->set_flashdata('jogadores', $jogadores);
+			$this->load->view('cadastro_jogador', $mensagem);	
 		} else {
 			$data = array(
 			'nome' => $this->input->post('nome_jogador'),
@@ -45,25 +59,28 @@ class CadastraJogador extends CI_Controller {
 			$this->load->model('Jogador_model');
 			$jogadores = $this->Jogador_model->listarJogadores();
 			$this->session->set_flashdata('jogadores', $jogadores);
-			$this->load->view('cadastro_jogador', $mensagem);
 
 			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos();
+			$cursos = $this->Curso_model->listarCursos($campeonato);
 			$this->session->set_flashdata('cursos', $cursos);
+
+			$this->load->view('cadastro_jogador', $mensagem);
 		}
 	}
 
 	public function remove()
 	{
-		$data = $this->uri->segment(3);
-		$data = rawurldecode($data);
+		$jogador = $this->uri->segment(3);
+		$jogador = rawurldecode($jogador);
+		$campeonato = $this->uri->segment(4);
+		$campeonato = rawurldecode($campeonato);
 
 		$this->load->model('Jogador_model');
-		$this->Jogador_model->deletarJogador($data);
+		$this->Jogador_model->deletarJogador($jogador);
 		$mensagem = ['mensagem_cadastro' => "Jogador excluído!"];
 
 		$this->load->model('Curso_model');
-		$cursos = $this->Curso_model->listarCursos();
+		$cursos = $this->Curso_model->listarCursos($campeonato);
 		$this->session->set_flashdata('cursos', $cursos);
 
 		$this->load->model('Jogador_model');
@@ -74,6 +91,8 @@ class CadastraJogador extends CI_Controller {
 
 	public function atualizar()
 	{
+		$campeonato = $this->uri->segment(3);
+		$campeonato = rawurldecode($campeonato);
 		$data_id = $this->uri->segment(3);
 
 		$this->load->library('form_validation');
@@ -84,7 +103,14 @@ class CadastraJogador extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$mensagem = array('mensagem_erro' => validation_errors());
-			$this->load->view('cadastro_jogador', $mensagem);
+			$this->load->model('Curso_model');
+			$cursos = $this->Curso_model->listarCursos($campeonato);
+			$this->session->set_flashdata('cursos', $cursos);
+
+			$this->load->model('Jogador_model');
+			$jogadores = $this->Jogador_model->listarJogadores();
+			$this->session->set_flashdata('jogadores', $jogadores);
+			$this->load->view('cadastro_jogador');	
 		} else {
 			
 			$nome = $this->input->post('nome_jogador');
@@ -96,7 +122,7 @@ class CadastraJogador extends CI_Controller {
 
 
 			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos();
+			$cursos = $this->Curso_model->listarCursos($campeonato);
 			$this->session->set_flashdata('cursos', $cursos);
 
 			$this->load->model('Jogador_model');
