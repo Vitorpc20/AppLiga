@@ -17,6 +17,7 @@ $campeonatos = $this->session->flashdata('campeonatos');
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/metisMenu.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/owl.carousel.min.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/slicknav.min.css')?>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
    
     <!-- amchart css -->
 
@@ -51,13 +52,13 @@ $campeonatos = $this->session->flashdata('campeonatos');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index/');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
+                                <a href="<?php echo site_url('Index/');?>" aria-expanded="true"><i class="fa fa-home"></i><span>Bem-Vindo Liga</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('Index/campeonatos')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Campeonatos </span></a>
+                                <a href="<?php echo site_url ('Index/campeonatos')?>" aria-expanded="true"><i class="fa fa-trophy"></i><span> Campeonatos </span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cursos </span></a>
+                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="fa fa-university"></i><span> Cursos </span></a>
                             </li>
                         </ul>
                     </nav>
@@ -83,9 +84,7 @@ $campeonatos = $this->session->flashdata('campeonatos');
                         <ul class="notification-area pull-right">
                             <li id="full-view"><i class="ti-fullscreen"></i></li>
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                            <li class="settings-btn">
-                                <i class="ti-settings"></i>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -105,12 +104,8 @@ $campeonatos = $this->session->flashdata('campeonatos');
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/avatar.png')?>" alt="avatar">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador<i class="fa fa-angle-down"></i></h4>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
-                            </div>
+                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
+                            <h4 class="user-name dropdown-toggle">Administrador</i></h4>
                         </div>
                     </div>
                 </div>
@@ -118,7 +113,7 @@ $campeonatos = $this->session->flashdata('campeonatos');
             <!-- page title area end -->
             <div class="main-content-inner">
                 <div class="row">
-                    <div class="col-lg-6 col-ml-12">
+                    <div class="col-md-12 col-ml-12">
                         <div class="row">
                             <!-- Textual inputs start -->
                             <div class="col-12 mt-5">
@@ -126,35 +121,19 @@ $campeonatos = $this->session->flashdata('campeonatos');
                                     <div class="card-body">
                                         <h4 class="header-title">Novo campeonato</h4> 
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary mt-4 pr-4 pl-4" data-toggle="modal" data-target="#modalCadastro">Cadastrar</button>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modalCadastro">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Cadastrar Novo Campeonato</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                                    </div>
-                                                    <form class="form-group" method="POST" action="<?php echo site_url('CadastraCampeonato/cadastra');?>">
-                                                        <div class="modal-body">
-                                                            <label for="example-text-input" class="col-form-label">Nome</label>
-                                                            <input class="form-control" type="text" name="nome_campeonato" id="nome_campeonato">
-                                            
-                                                            <label for="example-text-input" class="col-form-label">Ano</label>
-                                                            <input class="form-control" type="text" name="ano_campeonato" id="ano_campeonato">
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                                            <button type="submit" class="btn btn-primary" id="botao_cadastrar_campeonato">Cadastrar</button>
-                                                        </div>
-                                                    </form>
-                                                    <?php 
-                                                        if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
-                                                    ?>
-                                                </div>
+                                        <form class="form-group" method="POST" action="<?php echo site_url('CadastraCampeonato/cadastra');?>">
+                                            <div class="col-md-6">
+                                                <label for="example-text-input" class="col-form-label">Nome</label>
+                                                <input class="form-control" type="text" name="nome_campeonato" id="nome_campeonato">
+                                
+                                                <label for="example-text-input" class="col-form-label">Ano</label>
+                                                <input class="form-control" type="text" name="ano_campeonato" id="ano_campeonato">
                                             </div>
-                                        </div> 
+                                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4" data-toggle="modal" data-target="#modalCadastro">Cadastrar</button>
+                                        </form>
+                                        
                                         <?php 
+                                            if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>";
                                             if(isset($mensagem_cadastro)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_cadastro."</div></html>"; 
                                         ?>
                                     </div> 
@@ -180,9 +159,10 @@ $campeonatos = $this->session->flashdata('campeonatos');
                                                          ?>
 
                                                          <tr>
-                                                            <th><?php echo $value['nome'] ?></th>
-                                                            <th><?php echo $value['ano'] ?></th>
-                                                            <th><a class="btn btn-primary mb-3" href="<?php echo site_url() . '/Index/gerencia_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" >Gerenciar</a></th>
+
+                                                            <th><input class="bnt" style="background-color: white; width: 100%; height: 35px; border: none; text-align: center;" type="text" readonly="readonly" id="numero" value="<?php echo $value['nome'] ?>" /></th>
+                                                            <th><input class="bnt" style="background-color: white; width: 100%; height: 35px; border: none; text-align: center;" type="text" readonly="readonly" id="numero" value="<?php echo $value['ano'] ?>" /></th>
+                                                            <th><a class="btn btn-primary" href="<?php echo site_url() . '/Index/gerencia_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" >Gerenciar</a></th>
                                                         </tr>
 
                                                         <?php endforeach; ?>
@@ -209,23 +189,7 @@ $campeonatos = $this->session->flashdata('campeonatos');
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
-    <!-- offset area start -->
-    <div class="offset-area">
-        <div class="offset-close"><i class="ti-close"></i></div>
-        <ul class="nav offset-menu-tab">
-            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
-            <li><a data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
-        <div class="offset-content tab-content">
-            <div id="activity" class="tab-pane fade in show active">
-    
-            </div>
-            <div id="settings" class="tab-pane fade">
-                
-            </div>
-        </div>
-    </div>
-    <!-- offset area end -->
+
     <!-- jquery latest version -->
     <script src="<?php echo base_url ('assets/js/vendor/jquery-2.2.4.min.js')?>"></script>
     <!-- bootstrap 4 js -->
@@ -256,6 +220,13 @@ $campeonatos = $this->session->flashdata('campeonatos');
                         $('#modalCadastro').modal('show');
                 }
             );
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $("form#login").validate({
+            lang: 'pt' 
+          });
+        });
     </script>
 </body>
 

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/metisMenu.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/owl.carousel.min.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/slicknav.min.css')?>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
    
     <!-- amchart css -->
 
@@ -47,13 +48,13 @@
                     <nav>
                         <ul class="metismenu" id="menu">
                            <li>
-                                <a href="<?php echo site_url('Index/');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
+                                <a href="<?php echo site_url('Index/');?>" aria-expanded="true"><i class="fa fa-home"></i><span>Bem-Vindo Liga</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('Index/campeonatos')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Campeonatos </span></a>
+                                <a href="<?php echo site_url ('Index/campeonatos')?>" aria-expanded="true"><i class="fa fa-trophy"></i><span> Campeonatos </span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cursos </span></a>
+                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="fa fa-university"></i><span> Cursos </span></a>
                             </li>
                         </ul>
                     </nav>
@@ -79,9 +80,7 @@
                         <ul class="notification-area pull-right">
                             <li id="full-view"><i class="ti-fullscreen"></i></li>
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                            <li class="settings-btn">
-                                <i class="ti-settings"></i>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -101,20 +100,20 @@
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/avatar.png')?>" alt="avatar">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador<i class="fa fa-angle-down"></i></h4>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
-                            </div>
+                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
+                            <h4 class="user-name dropdown-toggle">Administrador</i></h4>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- page title area end -->
-            <div class="main-content-inner">
-                <h6 style="text-align: center">Plataforma da LIGA organizadora dos campeonatos da Universidade Federal de São Carlos - Campus Sorocaba.</h6>
-                <!-- row area start-->
+            <div class="main-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="col-md-12">
+                    <h2 style="text-align: center;">LIGA DESPORTIVA</h2></br>
+                    <h2 style="text-align: center">Plataforma de gerência de campeonatos</h2></br>
+                    
+                    <h3 style="text-align: center">Universidade Federal de São Carlos - Campus Sorocaba</h3></br>
+                </div>
             </div>
         </div>
         <!-- main content area end -->
@@ -127,23 +126,7 @@
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
-    <!-- offset area start -->
-    <div class="offset-area">
-        <div class="offset-close"><i class="ti-close"></i></div>
-        <ul class="nav offset-menu-tab">
-            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
-            <li><a data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
-        <div class="offset-content tab-content">
-            <div id="activity" class="tab-pane fade in show active">
-    
-            </div>
-            <div id="settings" class="tab-pane fade">
-                
-            </div>
-        </div>
-    </div>
-    <!-- offset area end -->
+   
     <!-- jquery latest version -->
     <script src="<?php echo base_url ('assets/js/vendor/jquery-2.2.4.min.js')?>"></script>
     <!-- bootstrap 4 js -->

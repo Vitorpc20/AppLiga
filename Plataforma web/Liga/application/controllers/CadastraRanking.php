@@ -50,7 +50,7 @@ class CadastraRanking extends CI_Controller {
 			$cursos = $this->Curso_model->listarCursos($campeonato);
 			$this->session->set_flashdata('cursos', $cursos);
 
-			$this->load->view('ranking');
+			$this->load->view('ranking', $mensagem);
 		} else {
 			$data = array(
 			'curso' => $this->input->post('curso'),
@@ -72,7 +72,7 @@ class CadastraRanking extends CI_Controller {
 			$cursos = $this->Curso_model->listarCursos($campeonato);
 			$this->session->set_flashdata('cursos', $cursos);
 
-			$this->load->view('ranking');
+			$this->load->view('ranking', $mensagem);
 		}
 	}
 

@@ -25,6 +25,9 @@ class CadastraCurso extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$mensagem = array('mensagem_erro' => validation_errors());
+			$this->load->model("Curso_model");
+			$cursos = $this->Curso_model->listarTodosCursos();
+			$this->session->set_flashdata('cursos', $cursos);
 			$this->load->view('cadastro_curso', $mensagem);
 		} else {
 			$data = array(
@@ -32,24 +35,34 @@ class CadastraCurso extends CI_Controller {
 			//Transfering data to Model
 
 			$this->load->model("Curso_model");
-			$this->Curso_model->insereCurso($data);
-			$mensagem = ['mensagem_cadastro' => "Curso cadastrado!"];
+			$query = $this->Curso_model->selecionaCurso($data);
+			if(!$query){
+				$this->load->model("Curso_model");
+				$this->Curso_model->insereCurso($data);
+				$mensagem = ['mensagem_cadastro' => "Curso cadastrado!"];
 
-			//Insere na view banco o ranking atualizado
-			$this->load->model("Ranking_model");
-			$ranking = array(
-				'curso' => $data['nome'],
-				'cod_campeonato' => '1', // MUDAR ISSO PARA CADA CAMPEONATO
-				'pontuacao' => '0',
-				);
-			$this->Ranking_model->inserirRanking($ranking);
+				//Insere na view banco o ranking atualizado
+				$this->load->model("Ranking_model");
+				$ranking = array(
+					'curso' => $data['nome'],
+					'cod_campeonato' => '1', // MUDAR ISSO PARA CADA CAMPEONATO
+					'pontuacao' => '0',
+					);
+				$this->Ranking_model->inserirRanking($ranking);
 
 
-			//Loading View
-			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarTodosCursos();
-			$this->session->set_flashdata('cursos', $cursos);
-			$this->load->view('cadastro_curso', $mensagem);
+				//Loading View
+				$this->load->model('Curso_model');
+				$cursos = $this->Curso_model->listarTodosCursos();
+				$this->session->set_flashdata('cursos', $cursos);
+				$this->load->view('cadastro_curso', $mensagem);
+			}else{
+				$mensagem = ['mensagem_erro' => "Já existe o curso: ".$data['nome']."!"];
+				$this->load->model("Curso_model");
+				$cursos = $this->Curso_model->listarTodosCursos();
+				$this->session->set_flashdata('cursos', $cursos);
+				$this->load->view('cadastro_curso', $mensagem);
+			}
 		}
 	}
 	public function remove()
@@ -95,19 +108,33 @@ class CadastraCurso extends CI_Controller {
 			$this->session->set_flashdata('cursos', $cursos);
 			$this->load->view('cadastro_curso', $mensagem);
 		} else {
-			
-			$data = $this->input->post('nome_curso');
-			//Transfering data to Model
+			$data = array(
+				'nome' => $this->input->post('nome_curso')
+			);
 
 			$this->load->model("Curso_model");
-			$this->Curso_model->atualiza($data, $velho);
-			$mensagem = ['mensagem_atualiza' => "Curso atualizado!"];
+			$query = $this->Curso_model->selecionaCurso($data);
 
-			//Loading View
-			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarTodosCursos();
-			$this->session->set_flashdata('cursos', $cursos);
-			$this->load->view('cadastro_curso', $mensagem);
+			if(!$query){
+				//Transfering data to Model
+
+				$this->load->model("Curso_model");
+
+				$this->Curso_model->atualiza($this->input->post('nome_curso'), $velho);
+				$mensagem = ['mensagem_cadastro' => "Curso atualizado!"];
+
+				//Loading View
+				$this->load->model('Curso_model');
+				$cursos = $this->Curso_model->listarTodosCursos();
+				$this->session->set_flashdata('cursos', $cursos);
+				$this->load->view('cadastro_curso', $mensagem);
+			}else{
+				$mensagem = ['mensagem_erro' => "Já existe o curso: ".$data['nome']."!"];
+				$this->load->model("Curso_model");
+				$cursos = $this->Curso_model->listarTodosCursos();
+				$this->session->set_flashdata('cursos', $cursos);
+				$this->load->view('cadastro_curso', $mensagem);
+			}
 		}
 	}
 	public function curso_campeonato()
@@ -148,16 +175,29 @@ class CadastraCurso extends CI_Controller {
 			);
 
 			$this->load->model("Curso_model");
-			$this->Curso_model->adiciona($data);
-			$mensagem = ['mensagem_adiciona' => "Curso adicionado!"];
+			$query = $this->Curso_model->selecionaCursoCampeonato($data, $campeonato);
+
+			if(!$query){
+				$this->load->model("Curso_model");
+				$this->Curso_model->adiciona($data);
+				$mensagem = ['mensagem_adiciona' => "Curso adicionado!"];
 
 
-			$this->load->model('Curso_model');
-			$cursosTodos = $this->Curso_model->listarTodosCursos();
-			$cursosAtuais = $this->Curso_model->listarCursos($campeonato);
-			$this->session->set_flashdata('cursosAtuais', $cursosAtuais);
-			$this->session->set_flashdata('cursosTodos', $cursosTodos);
-			$this->load->view('curso_campeonato', $mensagem);
+				$this->load->model('Curso_model');
+				$cursosTodos = $this->Curso_model->listarTodosCursos();
+				$cursosAtuais = $this->Curso_model->listarCursos($campeonato);
+				$this->session->set_flashdata('cursosAtuais', $cursosAtuais);
+				$this->session->set_flashdata('cursosTodos', $cursosTodos);
+				$this->load->view('curso_campeonato', $mensagem);
+			}else{
+				$mensagem = ['mensagem_erro' => "Curso já existente no campeonato!"];
+				$this->load->model('Curso_model');
+				$cursosTodos = $this->Curso_model->listarTodosCursos();
+				$cursosAtuais = $this->Curso_model->listarCursos($campeonato);
+				$this->session->set_flashdata('cursosAtuais', $cursosAtuais);
+				$this->session->set_flashdata('cursosTodos', $cursosTodos);
+				$this->load->view('curso_campeonato', $mensagem);
+			}
 		}
 	}
 

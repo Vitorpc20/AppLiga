@@ -15,8 +15,17 @@ class Curso_model extends CI_Model {
 	{
 		$this->db->select('nome');
 		$this->db->from('curso');
-		$this->db->where('nome', $name);
-		return $query = $this->db->get();
+		$this->db->where('nome', $data['nome']);
+		return $query = $this->db->get()->result();
+	}
+	public function selecionaCursoCampeonato($data, $campeonato)
+	{
+		$this->db->select('*');
+		$this->db->from('campeonato_curso');
+		$this->db->where('curso', $data['curso']);
+		$this->db->where('cod_campeonato', $campeonato);
+
+		return $query = $this->db->get()->result();
 	}
 
 	public function listarCursos($data){

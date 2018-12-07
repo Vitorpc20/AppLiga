@@ -35,15 +35,29 @@ class CadastraCampeonato extends CI_Controller {
 			'ano' => $this->input->post('ano_campeonato'));
 			//Transfering data to Model
 
-			$this->load->model("Campeonato_model");
-			$this->Campeonato_model->insereCampeonato($data);
-			$mensagem = ['mensagem_cadastro' => "Campeonato cadastrado!"];
 
-			//Loading View
-			$this->load->model('Campeonato_model');
-			$campeonatos = $this->Campeonato_model->listarCampeonatos();
-			$this->session->set_flashdata('campeonatos', $campeonatos);
-			$this->load->view('campeonatos', $mensagem);
+			$this->load->model("Campeonato_model");
+			$query = $this->Campeonato_model->selecionaCampeonato($data);
+
+			if(!$query){
+				$this->load->model("Campeonato_model");
+				$this->Campeonato_model->insereCampeonato($data);
+				$mensagem = ['mensagem_cadastro' => "Campeonato cadastrado!"];
+
+				//Loading View
+				$this->load->model('Campeonato_model');
+				$campeonatos = $this->Campeonato_model->listarCampeonatos();
+				$this->session->set_flashdata('campeonatos', $campeonatos);
+				$this->load->view('campeonatos', $mensagem);
+			}else{
+				$mensagem = ['mensagem_erro' => "Campeonato já existente!"];
+
+				//Loading View
+				$this->load->model('Campeonato_model');
+				$campeonatos = $this->Campeonato_model->listarCampeonatos();
+				$this->session->set_flashdata('campeonatos', $campeonatos);
+				$this->load->view('campeonatos', $mensagem);
+			}
 		}
 	}
 }

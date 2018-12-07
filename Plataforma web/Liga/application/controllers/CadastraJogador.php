@@ -51,20 +51,38 @@ class CadastraJogador extends CI_Controller {
 			'curso' => $this->input->post('curso_jogador'));
 			//Transfering data to Model
 
+			$jogador = $this->input->post('nome_jogador');
+
 			$this->load->model("Jogador_model");
-			$this->Jogador_model->insereJogador($data);
-			$mensagem = ['mensagem_cadastro' => "Jogador cadastrado!"];
+			$query = $this->Jogador_model->selecionaJogador($jogador);
 
-			//Loading View
-			$this->load->model('Jogador_model');
-			$jogadores = $this->Jogador_model->listarJogadores();
-			$this->session->set_flashdata('jogadores', $jogadores);
+			if(!$query){
 
-			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos($campeonato);
-			$this->session->set_flashdata('cursos', $cursos);
+				$this->load->model("Jogador_model");
+				$this->Jogador_model->insereJogador($data);
+				$mensagem = ['mensagem_cadastro' => "Jogador cadastrado!"];
 
-			$this->load->view('cadastro_jogador', $mensagem);
+				//Loading View
+				$this->load->model('Jogador_model');
+				$jogadores = $this->Jogador_model->listarJogadores();
+				$this->session->set_flashdata('jogadores', $jogadores);
+
+				$this->load->model('Curso_model');
+				$cursos = $this->Curso_model->listarCursos($campeonato);
+				$this->session->set_flashdata('cursos', $cursos);
+
+				$this->load->view('cadastro_jogador', $mensagem);
+			}else{
+				$mensagem = ['mensagem_erro' => "Ja existe o jogador: ".$jogador."!"];
+				$this->load->model('Curso_model');
+				$cursos = $this->Curso_model->listarCursos($campeonato);
+				$this->session->set_flashdata('cursos', $cursos);
+
+				$this->load->model('Jogador_model');
+				$jogadores = $this->Jogador_model->listarJogadores();
+				$this->session->set_flashdata('jogadores', $jogadores);
+				$this->load->view('cadastro_jogador', $mensagem);
+			}
 		}
 	}
 
@@ -91,7 +109,7 @@ class CadastraJogador extends CI_Controller {
 
 	public function atualizar()
 	{
-		$campeonato = $this->uri->segment(3);
+		$campeonato = $this->uri->segment(4);
 		$campeonato = rawurldecode($campeonato);
 		$data_id = $this->uri->segment(3);
 
@@ -118,17 +136,32 @@ class CadastraJogador extends CI_Controller {
 			//Transfering data to Model
 
 			$this->load->model("Jogador_model");
-			$this->Jogador_model->atualiza($nome, $curso, $data_id);
+			$query = $this->Jogador_model->selecionaJogador($nome);
+
+			if(!$query){
+				$this->load->model("Jogador_model");
+				$this->Jogador_model->atualiza($nome, $curso, $data_id);
 
 
-			$this->load->model('Curso_model');
-			$cursos = $this->Curso_model->listarCursos($campeonato);
-			$this->session->set_flashdata('cursos', $cursos);
+				$this->load->model('Curso_model');
+				$cursos = $this->Curso_model->listarCursos($campeonato);
+				$this->session->set_flashdata('cursos', $cursos);
 
-			$this->load->model('Jogador_model');
-			$jogadores = $this->Jogador_model->listarJogadores();
-			$this->session->set_flashdata('jogadores', $jogadores);
-			$this->load->view('cadastro_jogador');	
+				$this->load->model('Jogador_model');
+				$jogadores = $this->Jogador_model->listarJogadores();
+				$this->session->set_flashdata('jogadores', $jogadores);
+				$this->load->view('cadastro_jogador');	
+			}else{
+				$mensagem = ['mensagem_erro' => "Ja existe o jogador: ".$nome."!"];
+				$this->load->model('Curso_model');
+				$cursos = $this->Curso_model->listarCursos($campeonato);
+				$this->session->set_flashdata('cursos', $cursos);
+
+				$this->load->model('Jogador_model');
+				$jogadores = $this->Jogador_model->listarJogadores();
+				$this->session->set_flashdata('jogadores', $jogadores);
+				$this->load->view('cadastro_jogador', $mensagem);
+			}
 		}
 	}
 }

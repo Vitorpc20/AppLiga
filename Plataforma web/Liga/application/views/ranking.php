@@ -23,6 +23,7 @@ $cursos = $this->session->flashdata('cursos');
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/metisMenu.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/owl.carousel.min.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/slicknav.min.css')?>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
    
     <!-- amchart css -->
 
@@ -60,20 +61,20 @@ $cursos = $this->session->flashdata('cursos');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="ti-dashboard"></i><span><< Mais Campeonatos</span></a>
+                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="fa fa-trophy"></i><span><< Mais Campeonatos</span></a>
                             </li>
                             <?php foreach ($campeonato as $value): ?>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos Participantes</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-university"></i><span>Cursos</span></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro de Jogadores</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-users"></i><span>Jogadores</span></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro e gerência de Partidas</span></a> 
+                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a> 
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-list-ol"></i><span>Ranking</span></a>
                                 </li>
                             <?php endforeach ?>
                         </ul>
@@ -100,9 +101,7 @@ $cursos = $this->session->flashdata('cursos');
                         <ul class="notification-area pull-right">
                             <li id="full-view"><i class="ti-fullscreen"></i></li>
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                            <li class="settings-btn">
-                                <i class="ti-settings"></i>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -126,11 +125,7 @@ $cursos = $this->session->flashdata('cursos');
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
                              <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador <i class="fa fa-angle-down"></i></h4>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
-                            </div>
+                            <h4 class="user-name dropdown-toggle">Administrador</i></h4>
                         </div>
                     </div>
                 </div>
@@ -138,7 +133,7 @@ $cursos = $this->session->flashdata('cursos');
             <!-- page title area end -->
             <div class="main-content-inner">
                 <div class="row">
-                    <div class="col-lg-6 col-ml-12">
+                    <div class="col-md-12 col-ml-12">
                         <div class="row">
                             <!-- Textual inputs start -->
                             <div class="col-12 mt-5">
@@ -147,7 +142,7 @@ $cursos = $this->session->flashdata('cursos');
                                         <h4 class="header-title">Atualizar Ranking</h4>
 
                                         <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraRanking/atualiza/' . rawurlencode($value['cod_campeonato']); ?>">
-                                            <div class="col-sm-3 my-1">
+                                            <div class="col-md-6 my-1">
                                                 <label class="col-form-label" >Curso</label>
                                                 <select class="form-control" name="curso">
                                                     <option selected="true" disabled="disabled">Selecionar curso</option>
@@ -181,6 +176,7 @@ $cursos = $this->session->flashdata('cursos');
                                                 <table class="table text-center">
                                                     <thead class="text-uppercase bg-primary">
                                                         <tr class="text-white">
+
                                                             <th scope="col">Posição</th>
                                                             <th scope="col">Curso</th>
                                                             <th scope="col">Pontuação Total</th>
@@ -193,8 +189,23 @@ $cursos = $this->session->flashdata('cursos');
                                                             $i++;
                                                          ?>
 
+                                                        
                                                         <tr>
-                                                            <td><?php echo $i ?></td>
+                                                            
+                                                            <td>
+                                                                <?php 
+                                                                if ($i == 1) {
+                                                                    echo "<html><i class='fas fa-medal' style='color: #FFD700'></i></html>";
+                                                                }
+                                                                if ($i == 2) {
+                                                                    echo "<html><i class='fas fa-medal' style='color: #C0C0C0'></i></html>";
+                                                                }
+                                                                if ($i == 3) {
+                                                                    echo "<html><i class='fas fa-medal' style='color: #CD7F32'></i></html>";
+                                                                }
+                                                                 ?>
+
+                                                                <?php echo $i ?></td>
                                                             <td><?php echo $value['curso'] ?></td>
                                                             <td><?php echo $value['pontuacao'] ?></td>
                                                         </tr>
@@ -225,23 +236,7 @@ $cursos = $this->session->flashdata('cursos');
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
-    <!-- offset area start -->
-    <div class="offset-area">
-        <div class="offset-close"><i class="ti-close"></i></div>
-        <ul class="nav offset-menu-tab">
-            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
-            <li><a data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
-        <div class="offset-content tab-content">
-            <div id="activity" class="tab-pane fade in show active">
-
-            </div>
-            <div id="settings" class="tab-pane fade">
-
-            </div>
-        </div>
-    </div>
-    <!-- offset area end -->
+    
     <!-- jquery latest version -->
     <script src="<?php echo base_url ('assets/js/vendor/jquery-2.2.4.min.js')?>"></script>
     <!-- bootstrap 4 js -->

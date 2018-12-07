@@ -29,5 +29,14 @@ class Campeonato_model extends CI_Model {
 
 		return ($busca->num_rows() > 0) ? $busca->result_array() : array();
 	}
+
+	public function selecionaCampeonato($data)
+	{
+		$this->db->select('*');
+		$this->db->from('campeonato');
+		$this->db->where('nome', $data['nome']);
+		$this->db->where('ano', $data['ano']);
+		return $query = $this->db->get()->result();
+	}
 }
 ?>

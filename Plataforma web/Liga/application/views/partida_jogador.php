@@ -2,8 +2,8 @@
 $partida = $this->session->flashdata('partida');
 $jogador_partida1 = $this->session->flashdata('jogador_partida1');
 $jogador_partida2 = $this->session->flashdata('jogador_partida2');
-
-$campeonato = $this->session->userdata('campeonato');
+$mvp = $this->session->flashdata('mvp');
+$campeonato = $this->session->userdata('campeonato');  
 
 ?>
 
@@ -29,6 +29,7 @@ $campeonato = $this->session->userdata('campeonato');
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/jquery-ui.css'?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/jquery-ui.min.css'?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrap.css'?>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
    
     <!-- amchart css -->
 
@@ -63,20 +64,20 @@ $campeonato = $this->session->userdata('campeonato');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="ti-dashboard"></i><span><< Mais Campeonatos</span></a>
+                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="fa fa-trophy"></i><span><< Mais Campeonatos</span></a>
                             </li>
                             <?php foreach ($campeonato as $value): ?>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos Participantes</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-university"></i><span>Cursos</span></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro de Jogadores</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-users"></i><span>Jogadores</span></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro e gerência de Partidas</span></a> 
+                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a> 
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-list-ol"></i><span>Ranking</span></a>
                                 </li>
                             <?php endforeach ?>
                         </ul>
@@ -103,9 +104,7 @@ $campeonato = $this->session->userdata('campeonato');
                         <ul class="notification-area pull-right">
                             <li id="full-view"><i class="ti-fullscreen"></i></li>
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                            <li class="settings-btn">
-                                <i class="ti-settings"></i>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -120,7 +119,7 @@ $campeonato = $this->session->userdata('campeonato');
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="<?php echo site_url('Index');?>">Home</a></li>
                                 <li><a href="<?php echo site_url('Index/campeonatos');?>">Campeonatos</a></li>
-                                <li><a href="<?php echo site_url('CadastraPartida/Index');?>">Cadastro e Gerência de Partidas</a></li>
+                                <li><a href="<?php echo site_url('CadastraPartida/Index');?>">Partidas</a></li>
                                 <li><span><?php foreach ($campeonato as $value): ?>
                                     <?php echo $value['nome'] ?> <?php echo $value['ano'] ?>
                                 <?php endforeach ?> - Jogadores da Partida</span></li>
@@ -129,12 +128,8 @@ $campeonato = $this->session->userdata('campeonato');
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                            <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador <i class="fa fa-angle-down"></i></h4>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
-                            </div>
+                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
+                            <h4 class="user-name dropdown-toggle">Administrador</i></h4>
                         </div>
                     </div>
                 </div>
@@ -143,32 +138,38 @@ $campeonato = $this->session->userdata('campeonato');
             <div class="main-content-inner">
                 <div class="row">
                             <!-- Textual inputs start -->
-                    <div class="col-lg-12 mt-5">
+                    <div class="col-md-12 mt-5">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="header-title">Partida</h4>
                                 <p class="text-muted font-14 mb-4"></p>
 
-                                <form class="form-group" method="POST" action="<?php echo site_url('CadastraPartida/Jogadores');?>">
                                 <?php foreach($partida AS $value): ?>
+                                <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/atualizaJogadorPartida/' . $value['cod_jogo']; ?>">
                                     <div class="form-row" style="text-align: center;">
                                         <div class="col-lg-4 mt-1">
                                             <label class="col-form-label"><h1><?php echo $value['curso1'] ?></h1></label> 
                                         </div>
                                         <div class="col-lg-1 mt-1">
-                                            <input class="form-control" type="text" id="resultado1" value="<?php echo $value['resultado1'] ?>" style="text-align: center; width: 80px; height: 80px; font-size: 40px; color: black">
+                                            <input class="number" type="number" name="resultado1" id="resultado1" value="<?php echo $value['resultado1'] ?>" style="text-align: center; width: 80px; height: 80px; font-size: 40px; color: black">
                                         </div>
                                         <div class="col-lg-2 mt-1">
                                             <h2>X</h2>
                                         </div>
                                         <div class="col-lg-1 mt-1">
-                                            <input class="form-control" type="text" id="resultado2" value="<?php echo $value['resultado2'] ?>" style="text-align: center; width: 80px; height: 80px; font-size: 40px; color: black">
+                                            <input class="numeber" type="number" name="resultado2" id="resultado2" value="<?php echo $value['resultado2'] ?>" style="text-align: center; width: 80px; height: 80px; font-size: 40px; color: black">
                                         </div>
                                         <div class="col-lg-4 mt-1">
                                             <label class="col-form-label"><h1><?php echo $value['curso2'] ?></h1></label>
                                         </div>
                                         <div class="col-lg-12 mt-1">
-                                            <label class="col-form-label"><h1><?php echo $value['curso2'] ?></h1></label>
+                                            <i class="fa fa-star" style="color: #FFD700;"></i>
+                                            <label class="col-form-label"></i><h1>MVP</h1></label>
+                                            <i class="fa fa-star" style="color: #FFD700;"></i>
+                                            <div class="col-lg-12 mt-1">
+                                                <input type="text" name="nome_mvp" id="nome_mvp" style="text-align: center; width: 20%; height: 40px; color: black" value="<?php echo $value['nomemvp'] ?>">
+                                                
+                                            </div>
                                         </div>
                                         <div class="col-lg-6 mt-5">
                                             <div class="single-table">
@@ -176,9 +177,10 @@ $campeonato = $this->session->userdata('campeonato');
                                                     <table class="table table-hover text-center">
                                                         <thead class="text-uppercase bg-primary">
                                                             <tr class="text-white">
-                                                                <th scope="col">Número</th>
-                                                                <th scope="col">Jogador</th>
-                                                                <th scope="col">Gols/pontos</th>
+                                                                <th scope="col" style="width: 15%;">Número</th>
+                                                                <th scope="col" style="width: 60%;">Jogador</th>
+                                                                <th scope="col" style="width: 15%;">Gols/pontos</th>
+                                                                <th scope="col" style="width: 10%;"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -189,13 +191,15 @@ $campeonato = $this->session->userdata('campeonato');
                                                                         $i++;
                                                             ?>
                                                             <tr>
-                                                                <td type="number" id="numero"><?php echo $row1['numero']?></td>
-                                                                <td><?php echo $row1['nome']?></td>
+                                                                <input type="hidden" name="cod_jogador1[]" value="<?php echo $row1['cod_jogador']?>">
+                                                                <td><input style="background-color: white;" type="number" name="numero1[]" id="numero" value="<?php echo $row1['numero']?>" /></td>
+                                                                <td><input style="background-color: white; width: 100%; height: 35px; border: none;" type="text" name="nome1[]" readonly="readonly" id="numero" value="<?php echo $row1['nome']?>" /></td>
                                                                 <td>
-                                                                    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                                                    <input type="number" id="number" value="0" />
-                                                                    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                                                                    <!--<div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>-->
+                                                                    <input type="number" name="pontos1[]" id="numero" value="<?php echo $row1['pontuacao']?>" />
+                                                                    <!--<div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>-->
                                                                 </td>
+                                                                <td><a href="<?php echo site_url() . '/CadastraPartida/removeJogador/' . $value['cod_jogo'] . '/' . $row1['cod_jogador']; ?>" class="text-danger btn"><i style="cursor:pointer; text-align: center; font-size: 20px;" class="fas fa-user-times"></i></a></td>
                                                             </tr>
                                                             <?php endforeach; endif; ?>
                                                         </tbody>
@@ -212,9 +216,10 @@ $campeonato = $this->session->userdata('campeonato');
                                                     <table class="table table-hover text-center" align="top">
                                                         <thead class="text-uppercase bg-primary">
                                                             <tr class="text-white">
-                                                                <th scope="col">Número</th>
-                                                                <th scope="col">Jogador</th>
-                                                                <th scope="col">Gols/pontos</th>
+                                                                <th scope="col" style="width: 15%;">Número</th>
+                                                                <th scope="col" style="width: 60%;">Jogador</th>
+                                                                <th scope="col" style="width: 15%;">Gols/pontos</th>
+                                                                <th scope="col" style="width: 10%;"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -223,13 +228,15 @@ $campeonato = $this->session->userdata('campeonato');
                                                                     foreach($jogador_partida2 AS $row2):
                                                             ?>
                                                             <tr>
-                                                                <td type="number" id="numero"><?php echo $row2['numero']?></td>
-                                                                <td><?php echo $row2['nome']?></td>
+                                                                <input type="hidden" name="cod_jogador2[]" value="<?php echo $row2['cod_jogador']?>">
+                                                                <td><input style="background-color: white;" type="number" name="numero2[]" id="numero" value="<?php echo $row2['numero']?>" /></td>
+                                                                <td><input style="background-color: white; width: 100%; height: 35px; border: none;" type="text" name="nome2[]" readonly="readonly" id="numero" value="<?php echo $row2['nome']?>" /></td>
                                                                 <td>
-                                                                    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                                                                    <input type="number" id="number" value="0" />
-                                                                    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                                                                    <!--<div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>-->
+                                                                    <input type="number" name="pontos2[]" id="numero" value="<?php echo $row2['pontuacao']?>" />
+                                                                    <!--<div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>-->
                                                                 </td>
+                                                                <td><a href="<?php echo site_url() . '/CadastraPartida/removeJogador/' . $value['cod_jogo'] . '/' . $row2['cod_jogador']; ?>" class="text-danger btn"><i style="cursor:pointer; text-align: center; font-size: 20px;" class="fas fa-user-times"></i></a></td>
                                                             </tr>
                                                             <?php endforeach; endif; ?>
                                                         </tbody>
@@ -240,10 +247,13 @@ $campeonato = $this->session->userdata('campeonato');
                                                 </div>
                                             </div>
                                         </div>
+                                        <?php 
+                                            if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
+                                            if(isset($mensagem_cadastro)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_cadastro."</div></html>"; 
+                                        ?>
                                     </div>
                                 <?php endforeach; ?>
                                     <div style="text-align: right;" >
-                                        <button type="button" class="btn btn-danger">Cancelar</button>
                                         <button type="submit" class="btn btn-primary">Salvar</button>
                                     </div>
                                 </form>
@@ -255,9 +265,9 @@ $campeonato = $this->session->userdata('campeonato');
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
                                             <div class="modal-body ui-front">
-                                                <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/insereJogador/' . $value['cod_jogo']; ?>">
+                                                <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/insereJogador/' . $value['cod_jogo']. '/' . $value['curso1']; ?>">
                                                     <label for="example-text-input" class="col-form-label">Nome</label>
-                                                    <input class="form-control" type="text" name="nome_jogador" id="nome_jogador">
+                                                    <input class="form-control" type="text" name="nome_jogador" id="nome_jogador1">
                                                     <label for="example-text-input" class="col-form-label">Número</label>
                                                     <input class="form-control" type="text" name="numero_jogador" id="numero_jogador">
 
@@ -278,9 +288,9 @@ $campeonato = $this->session->userdata('campeonato');
                                                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                             </div>
                                             <div class="modal-body ui-front">
-                                                <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/insereJogador/' . $value['cod_jogo']; ?>">
+                                                <form class="form-group" method="POST" action="<?php echo site_url() . '/CadastraPartida/insereJogador/' . $value['cod_jogo'] . '/' . $value['curso2']; ?>">
                                                     <label for="example-text-input" class="col-form-label">Nome</label>
-                                                    <input class="form-control" type="text" name="nome_jogador" id="nome_jogador">
+                                                    <input class="form-control" type="text" name="nome_jogador" id="nome_jogador2">
                                                     <label for="example-text-input" class="col-form-label">Número</label>
                                                     <input class="form-control" type="text" name="numero_jogador" id="numero_jogador">
 
@@ -309,23 +319,7 @@ $campeonato = $this->session->userdata('campeonato');
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
-    <!-- offset area start -->
-    <div class="offset-area">
-        <div class="offset-close"><i class="ti-close"></i></div>
-        <ul class="nav offset-menu-tab">
-            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
-            <li><a data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
-        <div class="offset-content tab-content">
-            <div id="activity" class="tab-pane fade in show active">
 
-            </div>
-            <div id="settings" class="tab-pane fade">
-
-            </div>
-        </div>
-    </div>
-    <!-- offset area end -->
     <!-- jquery latest version -->
     <script src="<?php echo base_url ('assets/js/vendor/jquery-2.2.4.min.js')?>"></script>
     <!-- bootstrap 4 js -->
@@ -350,36 +344,23 @@ $campeonato = $this->session->userdata('campeonato');
 
    <script type="text/javascript">
         $(document).ready(function(){
-            $("#nome_jogador").autocomplete({
+            $("#nome_jogador1").autocomplete({
               source: "<?php echo site_url('CadastraPartida/pesquisa/?');?>"
             });
-        });
-
-        /*$(document).ready(function(){
-             $( "#nome_jogador" ).autocomplete({
-                source: function( request, response ) {
-                    $.ajax({
-                        url: "<?php echo site_url('CadastraPartida/pesquisa/?');?>",
-                        dataType: "json",
-                        data: {
-                            time: $value['curso1'],
-                            data: $('#nome_jogador').val()
-                        },
-                        success: function(data) {
-                           response(data);
-                        }
-                    });
-                }
-            });
-        });*/
-         
+        });         
     </script>
 
-
+     <script type="text/javascript">
+        $(document).ready(function(){
+            $("#nome_jogador2").autocomplete({
+              source: "<?php echo site_url('CadastraPartida/pesquisa/?');?>"
+            });
+        });         
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#nome_jogador").autocomplete({
+            $("#nome_mvp").autocomplete({
               source: "<?php echo site_url('CadastraPartida/pesquisa/?');?>"
             });
         });

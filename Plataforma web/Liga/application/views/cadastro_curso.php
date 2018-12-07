@@ -23,6 +23,7 @@ $curso = $this->session->flashdata('curso');
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/metisMenu.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/owl.carousel.min.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/slicknav.min.css')?>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
    
     <!-- amchart css -->
 
@@ -57,13 +58,13 @@ $curso = $this->session->flashdata('curso');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index/');?>" aria-expanded="true"><i class="ti-dashboard"></i><span>Bem-Vindo Liga</span></a>
+                                <a href="<?php echo site_url('Index/');?>" aria-expanded="true"><i class="fa fa-home"></i><span>Bem-Vindo Liga</span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('Index/campeonatos')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Campeonatos </span></a>
+                                <a href="<?php echo site_url ('Index/campeonatos')?>" aria-expanded="true"><i class="fa fa-trophy"></i><span> Campeonatos </span></a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> Cursos </span></a>
+                                <a href="<?php echo site_url ('CadastraCurso')?>" aria-expanded="true"><i class="fa fa-university"></i><span> Cursos </span></a>
                             </li>
                         </ul>
                     </nav>
@@ -89,9 +90,7 @@ $curso = $this->session->flashdata('curso');
                         <ul class="notification-area pull-right">
                             <li id="full-view"><i class="ti-fullscreen"></i></li>
                             <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                            <li class="settings-btn">
-                                <i class="ti-settings"></i>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -105,18 +104,14 @@ $curso = $this->session->flashdata('curso');
                             <h4 class="page-title pull-left">Cursos</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="<?php echo site_url('Index');?>">Home</a></li>
-                                <li><span>Formulário de cadastro</span></li>
+                                <li><span>Cursos</span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
                              <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador <i class="fa fa-angle-down"></i></h4>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
-                            </div>
+                            <h4 class="user-name dropdown-toggle">Administrador</i></h4>
                         </div>
                     </div>
                 </div>
@@ -124,41 +119,27 @@ $curso = $this->session->flashdata('curso');
             <!-- page title area end -->
             <div class="main-content-inner">
                 <div class="row">
-                    <div class="col-lg-6 col-ml-12">
+                    <div class="col-md-12 col-ml-12">
                         <div class="row">
                             <!-- Textual inputs start -->
-                            <div class="col-12 mt-5">
+                            <div class="col-md-12 mt-5">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="header-title">Novo Curso</h4> 
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary mt-4 pr-4 pl-4" data-toggle="modal" data-target="#modalCadastro">Cadastrar</button>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="modalCadastro">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Cadastrar Novo Curso</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                                    </div>
-                                                    <form class="form-group" method="POST" action="<?php echo site_url('CadastraCurso/cadastra');?>">
-                                                        <div class="modal-body">
-                                                            <label for="example-text-input" class="col-form-label">Nome</label>
-                                                            <input class="form-control" type="text" name="nome_curso" id="nome_curso">
-                                        
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                                            <button type="submit" class="btn btn-primary" id="botao_cadastrar_curso">Cadastrar</button>
-                                                        </div>
-                                                    </form>
-                                                    <?php 
-                                                        if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
-                                                    ?>
+                                        <div class="col-md-6 mt-5">
+                                            <form class="form-group" method="POST" action="<?php echo site_url('CadastraCurso/cadastra');?>">
+                                                <div class="modal-body">
+                                                    <label for="example-text-input" class="col-form-label">Nome</label>
+                                                    <input class="form-control" type="text" name="nome_curso" id="nome_curso">
+                                
                                                 </div>
-                                            </div>
-                                        </div> 
+                                                <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Cadastrar</button>
+                                            </form>
+                                        </div>
+                                        
                                         <?php 
+                                            if(isset($mensagem_erro)) echo "<html><div class='alert alert-danger' role='alert'>".$mensagem_erro."</div></html>"; 
                                             if(isset($mensagem_cadastro)) echo "<html><div class='alert alert-success' role='alert'>".$mensagem_cadastro."</div></html>"; 
                                         ?>
                                     </div> 
@@ -240,23 +221,8 @@ $curso = $this->session->flashdata('curso');
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
-    <!-- offset area start -->
-    <div class="offset-area">
-        <div class="offset-close"><i class="ti-close"></i></div>
-        <ul class="nav offset-menu-tab">
-            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
-            <li><a data-toggle="tab" href="#settings">Settings</a></li>
-        </ul>
-        <div class="offset-content tab-content">
-            <div id="activity" class="tab-pane fade in show active">
-                
-            </div>
-            <div id="settings" class="tab-pane fade">
-                
-            </div>
-        </div>
-    </div>
-    <!-- offset area end -->
+    
+
     <!-- jquery latest version -->
     <script src="<?php echo base_url ('assets/js/vendor/jquery-2.2.4.min.js')?>"></script>
     <!-- bootstrap 4 js -->

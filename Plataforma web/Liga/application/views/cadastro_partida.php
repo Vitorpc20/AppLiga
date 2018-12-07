@@ -23,6 +23,7 @@ $cursos = $this->session->flashdata('cursos');
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/metisMenu.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/owl.carousel.min.css')?>">
     <link rel="stylesheet" href="<?php echo base_url ('assets/css/slicknav.min.css')?>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
    
     <!-- amchart css -->
 
@@ -57,20 +58,20 @@ $cursos = $this->session->flashdata('cursos');
                     <nav>
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="ti-dashboard"></i><span><< Mais Campeonatos</span></a>
+                                <a href="<?php echo site_url('Index/campeonatos');?>" aria-expanded="true"><i class="fa fa-trophy"></i><span><< Mais Campeonatos</span></a>
                             </li>
                             <?php foreach ($campeonato as $value): ?>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-pie-chart"></i><span>Cursos Participantes</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraCurso/curso_campeonato/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-university"></i><span>Cursos</span></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="ti-slice"></i><span>Cadastro de Jogadores</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraJogador/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-users"></i><span>Jogadores</span></a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Cadastro e gerência de Partidas</span></a> 
+                                    <a href="<?php echo site_url() . '/CadastraPartida/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-table"></i><span>Partidas</span></a> 
                                 </li>
                                 <li>
-                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-exclamation-triangle"></i><span>Ranking</span></a>
+                                    <a href="<?php echo site_url() . '/CadastraRanking/Index/' . rawurlencode($value['cod_campeonato']); ?>" aria-expanded="true"><i class="fa fa-list-ol"></i><span>Ranking</span></a>
                                 </li>
                             <?php endforeach ?>
                         </ul>
@@ -113,18 +114,14 @@ $cursos = $this->session->flashdata('cursos');
                                 <li><a href="<?php echo site_url('Index/campeonatos');?>">Campeonatos</a></li>
                                 <li><span><?php foreach ($campeonato as $value): ?>
                                     <?php echo $value['nome'] ?> <?php echo $value['ano'] ?>
-                                <?php endforeach ?> - Cadastro e Gerência de Partidas</span></li>
+                                <?php endforeach ?> - Partidas</span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                            <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador <i class="fa fa-angle-down"></i></h4>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <a class="dropdown-item" href="#">Log Out</a>
-                            </div>
+                             <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
+                            <h4 class="user-name dropdown-toggle">Administrador</i></h4>
                         </div>
                     </div>
                 </div>
@@ -132,7 +129,7 @@ $cursos = $this->session->flashdata('cursos');
             <!-- page title area end -->
             <div class="main-content-inner">
                 <div class="row">
-                    <div class="col-lg-8 col-ml-12">
+                    <div class="col-md-12 col-ml-12">
                         <div class="row">
                             <!-- Textual inputs start -->
                             <div class="col-12 mt-5">
@@ -222,8 +219,9 @@ $cursos = $this->session->flashdata('cursos');
                                                         <th scope="col">Resultado</th>
                                                         <th scope="col">Modalidade</th>
                                                         <th scope="col">Hora/Data</th>
-                                                        <th scope="col">Editar/Excluir</th>
                                                         <th scope="col">Jogadores</th>
+                                                        <th scope="col">Editar/Excluir</th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -234,17 +232,19 @@ $cursos = $this->session->flashdata('cursos');
                                                         <th><?php echo $value['curso1'] ?> <?php echo $value['resultado1'] ?> X <?php echo $value['resultado2']?> <?php echo $value['curso2']?></th>
                                                         <th><?php echo $value['modalidade'] ?></th>
                                                         <th><?php echo $value['horario'] ?>/<?php echo date('d-m-Y', strtotime($value['data'])) ?></th>
+                                                        <?php foreach($campeonato AS $value2): ?>
+                                                        <th>
+                                                            <a href="<?php echo site_url() . '/CadastraPartida/partida_jogador/' . $value['cod_jogo'] . '/' . $value2['cod_campeonato']; ?>" class="text-secondary"><i style="cursor:pointer" class="fas fa-user-edit"></i></a>   
+                                                        </th>
                                                         <td>
                                                             <ul class="d-flex justify-content-center">
                                                                 <li class="mr-3"><a data-toggle="modal" data-target="#<?php echo $value['cod_jogo'] ?>" class="text-secondary"><i style="cursor:pointer" class="fa fa-edit"></i></a></li>
-                                                                <?php foreach($campeonato AS $value2): ?>
+                                                                
                                                                 <li><a href="<?php echo site_url() . '/CadastraPartida/remove/' . $value['cod_jogo'] . '/' . $value2['cod_campeonato']; ?>" class="text-danger"><i style="cursor:pointer" class="ti-trash"></i></a></li>
-                                                                <?php endforeach; ?> 
+                                                                 
                                                             </ul>
                                                         </td>
-                                                        <th>
-                                                            <a href="<?php echo site_url() . '/CadastraPartida/partida_jogador/' . $value['cod_jogo'] . '/' . $value2['cod_campeonato']; ?>" class="text-secondary"><i style="cursor:pointer" class="fa fa-edit"></i></a>   
-                                                        </th>
+                                                        <?php endforeach; ?>
                                                     </tr>
                                                     <div class="modal fade" id="<?php echo $value['cod_jogo'] ?>">
                                                             <div class="modal-dialog modal-dialog-centered" role="document">
