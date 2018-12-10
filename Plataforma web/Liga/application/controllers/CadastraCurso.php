@@ -41,15 +41,6 @@ class CadastraCurso extends CI_Controller {
 				$this->Curso_model->insereCurso($data);
 				$mensagem = ['mensagem_cadastro' => "Curso cadastrado!"];
 
-				//Insere na view banco o ranking atualizado
-				$this->load->model("Ranking_model");
-				$ranking = array(
-					'curso' => $data['nome'],
-					'cod_campeonato' => '1', // MUDAR ISSO PARA CADA CAMPEONATO
-					'pontuacao' => '0',
-					);
-				$this->Ranking_model->inserirRanking($ranking);
-
 
 				//Loading View
 				$this->load->model('Curso_model');
