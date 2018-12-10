@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Liga Desportiva UFSCar-Sorocaba</string>
+    <string name="app_name">Liga Desportiva - Ufscar Sorocaba</string>
     <string name="title_activity_jogo">Jogo</string>
     <string name="title_activity_tela_jogo">TelaJogo</string>
     <string name="msg_tela_jogo">Aqui é onde ficarão as informações sobre o jogo selecionado!</string>

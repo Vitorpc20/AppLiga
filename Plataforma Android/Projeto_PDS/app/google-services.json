@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "106660743698",
+    "firebase_url": "https://bd-liga.firebaseio.com",
+    "project_id": "bd-liga",
+    "storage_bucket": "bd-liga.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106660743698:android:93cb1c561700a46b",
+        "android_client_info": {
+          "package_name": "com.projeto_pds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106660743698-qbkfs0i6jbaibcj10mbdq9og4lvfas1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.projeto_pds",
+            "certificate_hash": "168d0931d541f63e6b38251fd4556476a7928184"
+          }
+        },
+        {
+          "client_id": "106660743698-nkkdctoisj9fnsfvaqemffo99ejoc87k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAILTKti52lL5ugB5FoMSbwVMFh6gDhh_I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106660743698-nkkdctoisj9fnsfvaqemffo99ejoc87k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private String title[] = {"Ranking", "Lista de Jogos"};
+    private String title[] = {"Lista de Jogos", "Ranking"};
     private ArrayList<Jogo> listaDeJogo;
     private int posicao_campeonato;
 
@@ -25,12 +25,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position%2==0){
-            return new RankingFragment();
-        } else {
             ListaJogosFragment frag = new ListaJogosFragment();
             frag.setListaDeJogo(listaDeJogo);
             frag.setPosicao_campeonato(posicao_campeonato);
             return frag;
+        } else {
+            return new RankingFragment();
         }
     }
 

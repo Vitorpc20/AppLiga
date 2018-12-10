@@ -20,6 +20,7 @@ public class JogadoresAdapter extends ArrayAdapter<Jogador> {
     // View lookup cache
     private static class ViewHolder {
         TextView txtName;
+        TextView tvPontos;
     }
 
     public JogadoresAdapter(ArrayList<Jogador> data, Context context) {
@@ -41,6 +42,7 @@ public class JogadoresAdapter extends ArrayAdapter<Jogador> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.list_view_item_jogadores, parent, false);
+            viewHolder.tvPontos = (TextView) convertView.findViewById(R.id.tv_pontos);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.tv_nome_jogador);
 
             convertView.setTag(viewHolder);
@@ -50,6 +52,7 @@ public class JogadoresAdapter extends ArrayAdapter<Jogador> {
         lastPosition = position;
 
         viewHolder.txtName.setText(jogador.getNome());
+        viewHolder.tvPontos.setText(String.valueOf(jogador.getPontosNaPartida()));
         return convertView;
     }
 }

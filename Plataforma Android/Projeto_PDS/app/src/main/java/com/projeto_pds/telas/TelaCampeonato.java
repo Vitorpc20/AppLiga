@@ -1,6 +1,11 @@
 package com.projeto_pds.telas;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -29,13 +34,14 @@ public class TelaCampeonato extends AppCompatActivity {
         setContentView(R.layout.activity_tela_campeonato);
 
         ArrayList<Jogo> listaDeJogo = new ArrayList<>();
+        Campeonato campeonato = null;
 
         Intent intent = getIntent();
         int posicao = intent.getIntExtra("campeonato_position_list", -1);
 
         if(posicao!=-1){
             try {
-                Campeonato campeonato = Configs.campeonatoList.get(posicao);
+                campeonato = Configs.campeonatoList.get(posicao);
                 listaDeJogo = campeonato.getListaDeJogos();
             } catch (Exception e){
                 e.printStackTrace();
@@ -50,6 +56,12 @@ public class TelaCampeonato extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2E3641")));
+        if(campeonato!=null){
+            getSupportActionBar().setTitle(campeonato.getNomeCampeonato());
+        }
+        //getSupportActionBar().setSubtitle("This is Subtitle");
     }
 
     @Override

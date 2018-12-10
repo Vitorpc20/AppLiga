@@ -13,12 +13,15 @@ import java.util.ArrayList;
 
 public class ViewPagerJogoAdapter extends FragmentPagerAdapter {
 
-    private String title[] = {"Jogadores Time_1", "Jogadores Time_2"};
+    private String title[];
     private ArrayList<Jogador> jogadoresTime1;
     private ArrayList<Jogador> jogadoresTime2;
 
-    public ViewPagerJogoAdapter(FragmentManager manager, ArrayList<Jogador> jogadoresTime1, ArrayList<Jogador> jogadoresTime2) {
+    public ViewPagerJogoAdapter(FragmentManager manager, ArrayList<Jogador> jogadoresTime1, ArrayList<Jogador> jogadoresTime2, String nomeTime1, String nomeTime2) {
         super(manager);
+        title = new String[2];
+        title[0] = nomeTime1;
+        title[1] = nomeTime2;
         this.jogadoresTime1 = jogadoresTime1;
         this.jogadoresTime2 = jogadoresTime2;
     }

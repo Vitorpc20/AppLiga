@@ -8,8 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".telas.TelaInicial">
+        android:theme="@style/AppTheme">
+        <activity android:name=".telas.TelaListaDeCampeonatos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,6 @@
         <activity android:name=".telas.TelaListaJogos" />
         <activity android:name=".telas.TelaJogo" />
         <activity android:name=".telas.TelaCampeonato" />
-        <activity android:name=".telas.TelaListaDeCampeonatos"></activity>
     </application>
 
 </manifest>
