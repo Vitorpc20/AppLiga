@@ -29,7 +29,12 @@ $campeonato = $this->session->userdata('campeonato');
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/jquery-ui.css'?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/jquery-ui.min.css'?>">
     <link rel="stylesheet" href="<?php echo base_url().'assets/css/bootstrap.css'?>">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+   
+
+   <link rel="stylesheet" href="<?php echo base_url ('assets/css/fontawesome/css/all.min.css')?>">
+    <link rel="stylesheet" href="<?php echo base_url ('assets/css/fontawesome/css/all.css')?>">
+    <link rel="stylesheet" href="<?php echo base_url ('assets/css/fontawesome/css/fontawesome.css')?>">
+    <link rel="stylesheet" href="<?php echo base_url ('assets/css/fontawesome/css/fontawesome.min.css')?>">
    
     <!-- amchart css -->
 
@@ -129,7 +134,10 @@ $campeonato = $this->session->userdata('campeonato');
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
                              <img class="avatar user-thumb" src="<?php echo base_url ('assets/images/author/fotoLiga.jpeg')?>" alt="avatar">
-                            <h4 class="user-name dropdown-toggle">Administrador</i></h4>
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Administrador <i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="<?php echo site_url() . '/CadastraCampeonato/Sair/'?>">Sair</a>
+                            </div>
                         </div>
                     </div>
                 </div>
