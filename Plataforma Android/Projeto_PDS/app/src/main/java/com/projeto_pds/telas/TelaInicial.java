@@ -27,6 +27,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.projeto_pds.NotificationUtil;
 import com.projeto_pds.R;
 import com.projeto_pds.info.Configs;
 import com.projeto_pds.model.Campeonato;
@@ -50,9 +51,27 @@ public class TelaInicial extends AppCompatActivity {
         btVerCampeonatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TelaInicial.this, TelaListaDeCampeonatos.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(TelaInicial.this, TelaListaDeCampeonatos.class);
+                startActivity(intent);*/
                 //pesquisa();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+
+                            Thread.sleep(2000);
+
+                            int id = 1;
+                            String contentTitle = "Nova mensagem";
+                            String contentText = "Você possui 3 novas mensagens";
+                            Intent intent = new Intent(getApplicationContext(), TelaListaDeCampeonatos.class);
+                            intent.putExtra("msg", "Olá, leitor, como cai?");
+                            NotificationUtil.createHeadsUpNotification(getApplicationContext(), intent, contentTitle, contentText, id);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
 
