@@ -295,42 +295,61 @@ class CadastraPartida extends CI_Controller {
 			$jogador = $this->input->post('nome_jogador');
 			$cod_jogador = $this->Jogador_model->selecionaJogador($jogador);
 
-			foreach ($cod_jogador as $value)
-
-
-			$this->load->model('Jogador_model');
-			$query = $this->Jogador_model->selecionaJogadorCurso($value['cod_jogador'], $curso);
-			if($query){
-				
-
-				$novo_jogador_partida = array(
-					'cod_jogo' => $cod_jogo,
-					'cod_jogador' => $value['cod_jogador'],
-					'numero' => $this->input->post('numero_jogador')
-				);
+			if($cod_jogador){
+				foreach ($cod_jogador as $value)
 
 				$this->load->model('Jogador_model');
-				$this->Jogador_model->insereJogadorPartida($novo_jogador_partida);
+				$query = $this->Jogador_model->selecionaJogadorCurso($value['cod_jogador'], $curso);
+				if($query){
+					
 
-				$mensagem = ['mensagem_cadastro' => "Jogador inserido!"];
+					$novo_jogador_partida = array(
+						'cod_jogo' => $cod_jogo,
+						'cod_jogador' => $value['cod_jogador'],
+						'numero' => $this->input->post('numero_jogador')
+					);
 
-				$this->load->model('Partida_model');
-				$partida = $this->Partida_model->selecionaPartida($cod_jogo);
-				$this->session->set_flashdata('partida', $partida);
+					$this->load->model('Jogador_model');
+					$this->Jogador_model->insereJogadorPartida($novo_jogador_partida);
 
-				foreach ($partida AS $jogo)
-				
-				$this->load->model('Jogador_model');
-				$jogador_partida1 = $this->Jogador_model->selecionaJogadorPartidaTime1($cod_jogo, $jogo);
-				$this->session->set_flashdata('jogador_partida1', $jogador_partida1);
+					$mensagem = ['mensagem_cadastro' => "Jogador inserido!"];
 
-				$this->load->model('Jogador_model');
-				$jogador_partida2 = $this->Jogador_model->selecionaJogadorPartidaTime2($cod_jogo, $jogo);
-				$this->session->set_flashdata('jogador_partida2', $jogador_partida2);
+					$this->load->model('Partida_model');
+					$partida = $this->Partida_model->selecionaPartida($cod_jogo);
+					$this->session->set_flashdata('partida', $partida);
 
-				$this->load->view('partida_jogador', $mensagem);
+					foreach ($partida AS $jogo)
+					
+					$this->load->model('Jogador_model');
+					$jogador_partida1 = $this->Jogador_model->selecionaJogadorPartidaTime1($cod_jogo, $jogo);
+					$this->session->set_flashdata('jogador_partida1', $jogador_partida1);
+
+					$this->load->model('Jogador_model');
+					$jogador_partida2 = $this->Jogador_model->selecionaJogadorPartidaTime2($cod_jogo, $jogo);
+					$this->session->set_flashdata('jogador_partida2', $jogador_partida2);
+
+					$this->load->view('partida_jogador', $mensagem);
+				}else{
+					$mensagem = ['mensagem_erro' => "Jogador não pertence a este curso!"];
+
+					$this->load->model('Partida_model');
+					$partida = $this->Partida_model->selecionaPartida($cod_jogo);
+					$this->session->set_flashdata('partida', $partida);
+
+					foreach ($partida AS $jogo)
+					
+					$this->load->model('Jogador_model');
+					$jogador_partida1 = $this->Jogador_model->selecionaJogadorPartidaTime1($cod_jogo, $jogo);
+					$this->session->set_flashdata('jogador_partida1', $jogador_partida1);
+
+					$this->load->model('Jogador_model');
+					$jogador_partida2 = $this->Jogador_model->selecionaJogadorPartidaTime2($cod_jogo, $jogo);
+					$this->session->set_flashdata('jogador_partida2', $jogador_partida2);
+
+					$this->load->view('partida_jogador', $mensagem);
+				}
 			}else{
-				$mensagem = ['mensagem_erro' => "Jogador não pertence a este curso!"];
+				$mensagem = ['mensagem_erro' => "Jogador não cadastrado no banco de dados!"];
 
 				$this->load->model('Partida_model');
 				$partida = $this->Partida_model->selecionaPartida($cod_jogo);

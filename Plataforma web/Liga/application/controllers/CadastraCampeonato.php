@@ -60,10 +60,5 @@ class CadastraCampeonato extends CI_Controller {
 			}
 		}
 	}
-
-	public function Sair()
-	{
-		$this->load->view('login');
-	}
 }
 ?>

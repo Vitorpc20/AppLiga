@@ -14,7 +14,9 @@ class Campeonato_model extends CI_Model {
 	public function listarCampeonatos(){
 
 		$this->db->from('campeonato')
-		->select('*');
+		->select('*')
+		->order_by('ano', 'desc')
+		->order_by('nome');
 
 		$busca = $this->db->get();
 
